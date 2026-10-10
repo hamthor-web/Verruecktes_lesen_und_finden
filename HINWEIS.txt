@@ -1,0 +1,1 @@
+13 Federbilder aus dem Chat, verlustarm auf 1000 x 1000 Pixel verkleinert (PNG). Die Originalbilder wurden nicht verändert. WICHTIG: Die gelieferten Grafiken haben trotz RGBA-Dateiformat noch keinen transparenten Hintergrund (Alpha durchgehend 255). Freistellen ist ein gesonderter Arbeitsschritt.
