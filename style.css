@@ -49,3 +49,11 @@ body.playing .questionBox{padding:10px 12px}
 body.playing .questionBox h1{font-size:clamp(20px,2.6vw,30px);margin:4px 0 0;line-height:1.25}
 body.playing .reward-panel p{font-size:11px;margin:3px 0}
 @media(max-height:500px){body.playing .brand small,body.playing .questionBox .eyebrow{display:none}body.playing .top{padding-top:5px;padding-bottom:5px}}
+
+/* Keep the underwater scene aligned while the next detail comes into view. */
+.unterwasserwelt-picture{aspect-ratio:1;background:#3694ba}
+.unterwasserwelt-picture .knurpsel-frame{transform-origin:center}
+.unterwasserwelt-picture .knurpsel-leave{animation:unterwasserwelt-out 2s ease-in-out forwards}
+.unterwasserwelt-picture .knurpsel-enter{animation:unterwasserwelt-in 2s ease-in-out forwards}
+@keyframes unterwasserwelt-out{from{opacity:1}to{opacity:0}}
+@keyframes unterwasserwelt-in{from{opacity:0}to{opacity:1}}

@@ -48,3 +48,7 @@ Rakete und Knurpsel verwenden zwei Sekunden pro Bildwechsel. Die Zwischenbilder 
 Fünfte Fortschrittsgeschichte: zehn unveränderte JPEG-Bilder in fester Reihenfolge. Vor jedem Wechsel bleibt das vorherige Bild im großen Dialog volle zwei Sekunden unverändert sichtbar, auch bei reduzierter Bewegung. Danach 1,5 Sekunden sanfte Überblendung. Das neue Bild bleibt bis Weiter oder bewusstem Antippen sichtbar. Keine erklärenden Zwischenüberschriften; nur zum Abschluss „Deine Matschgeschichte ist jetzt fertig!“. Die gemeinsame Steuerung gibt auch Knurpsel und Rakete die Betrachtungspause von zwei Sekunden und blendet deren Zwischenüberschriften aus. Pfau und Baum zeigen ihre Überschriften weiterhin.
 
 `node test_matschwiese.cjs` prüft zwölf Runden, Reihenfolge, Titel, manuelle Betrachtung, Fehlversuche, Mehrfachtipps, Tastatur, Abschluss und Abbruch.
+
+## Unterwasserwelt
+
+Zusätzliche Fortschrittsauswahl mit zehn Bildstufen. Start: Fragezeichen; die erste Lösung zeigt das leere Meer, die zehnte die offene Schatztruhe. Das bisherige Bild bleibt im Dialog zwei Sekunden unverändert stehen. Danach überblenden die ausgerichteten Bilder zwei Sekunden lang. Das neue Bild bleibt bis zum Antippen von Weiter sichtbar. Nur am Ende erscheint „Du hast den Schatz gefunden!“. Die Originalbilder wurden mit 1000 × 1000 Pixeln als WebP gespeichert. `node test_unterwasserwelt.cjs` prüft die vollständigen Runden und den Ablauf mit kontrollierten Timern.
