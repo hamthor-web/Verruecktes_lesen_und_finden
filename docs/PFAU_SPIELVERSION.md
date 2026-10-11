@@ -2,9 +2,9 @@
 
 Zehn Aufgaben pro Runde; 6/8/10/12 Karten je Aufgabe. Richtige Antworten ergänzen genau ein Teil; Fehler und Doppelklicks ergänzen keines. Pfau ist Standard, Baum bleibt wählbar.
 
-## Aktuelles Layout 4
+## Aktuelles Layout 5
 
-Sieben von acht Federplätzen, zwei von drei Schmuckplätzen und ein Schuhplatz werden einmal pro Runde ausgewählt. Federkiele sitzen an festen anatomischen Ansatzpunkten hinter dem Vorderkörper; deren Pivotwerte stehen in dist/pfau-art.js. Originalpositionen sind unter originalSlots dokumentiert. Die 13 neuen Federn bleiben in der Entwicklungsgalerie.
+Sieben von acht Federplätzen, zwei von drei Schmuckplätzen und ein Schuhplatz werden einmal pro Runde ausgewählt. Federkiele sitzen an festen anatomischen Ansatzpunkten hinter dem Vorderkörper; deren Pivotwerte stehen in dist/pfau-art.js. Originalpositionen sind unter originalSlots dokumentiert. Die 13 zusätzlichen Federn sind als transparente, verlustfrei gespeicherte WebP-Dateien im assets-Ordner aktiv. Pro Runde werden vier zusätzliche und drei bisherige Federn ohne Wiederholung zufällig auf sieben von acht Plätzen verteilt. Auswahl und Ansatzpunkte bleiben während der Runde fest. Alle Federn sind gegenüber der ersten Vorschau zweimal um 5 % vergrößert (Faktor 1,1025). Für jede zusätzliche Feder sind acht passende Positionen, Drehungen und Pivotwerte hinterlegt.
 
 Heikes hochgeladene Krone sowie Regenbogenstiefel, gelbe Stiefel, Rollschuhe und Stiefel mit Spritzern ersetzen die entsprechenden bisherigen Bilder. Weiße Hintergründe wurden mit Bildbearbeitung freigestellt. Die PNG-Fassungen liegen in entwicklung/pfau-zubehoer; optimierte transparente WebP-Bilder sind in pfau-art.js eingebettet. Krone und jede Schuhvariante besitzen eigene Position, Größe und Pivotwerte. Der einzelne Stiefel mit Spritzern wird zweimal, links gespiegelt, eingesetzt. Pro Runde wird genau eine der fünf Schuhvarianten gewählt und bleibt fest. Grundbild und Vorderkörper bleiben die Originalbilder mit vollständigen Beinen. Eine CSS-Polygonmaske blendet ausschließlich den unteren Zehen-/Krallenbereich zwischen x=36–66 % ab y=89,2 % aus. Die bisherigen Fassungen ohne Füße werden nicht mehr benutzt. Schuhvarianten sind etwas kleiner und tiefer an den vollständigen Unterschenkeln befestigt.
 
@@ -20,3 +20,4 @@ Statische Zusammensetzung aller fünf Schuhvarianten mit der neuen Krone visuell
 ## Zusätzliche aktive Elemente
 
 Kopfplatz: Krone, Zipfelmütze oder Kopfschleife. Gesichtsplatz: Brille oder schielende Augen. Halsplatz: bestehende Halsschleife. Pro Runde werden zwei der drei Plätze gewählt, Varianten und Plätze bleiben innerhalb der Runde fest. Der Fußplatz wählt Regenbogenstiefel, gelbe Stiefel, Rollschuhe, Stiefel mit Spritzern oder rote Schuhe. Zehn Fortschrittsschritte bleiben unverändert. Alte Beinbilder werden nicht ausgeschnitten oder verändert; nur die Krallenmaske ist Code. Die schielenden Augen überdecken die originalen Augen.
+

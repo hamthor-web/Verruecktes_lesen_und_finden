@@ -1,6 +1,12 @@
 (function(root){
 'use strict';
-function plan(art,rng=Math.random){const shuffle=a=>QuestionEngine.shuffle(a,rng);const feathers=shuffle(art.slots.filter(x=>x.si<=8)).slice(0,7),accessories=shuffle(art.slots.filter(x=>x.si>=9&&x.si<=11)).slice(0,2).map(slot=>{const variants=slot.si===9?art.headVariants:slot.si===10?art.faceVariants:null;return variants?.length?{...slot,...variants[Math.floor(rng()*variants.length)],si:slot.si}:slot;}),footSlot=art.slots.find(x=>x.si===12),foot=art.footVariants?.length?art.footVariants[Math.floor(rng()*art.footVariants.length)]:null,feet=foot?{...footSlot,...foot,si:12}:footSlot;return shuffle([...feathers,...accessories,feet]).map(slot=>({si:slot.si,id:slot.asset,slot}));}
+function featherPlan(art,shuffle){
+ const slots=shuffle(art.slots.filter(x=>x.si<=8)).slice(0,7);
+ if(!art.extraFeathers?.length)return slots;
+ const pool=shuffle(art.extraFeathers);
+ return slots.map((slot,i)=>i%3===0?slot:(pool[i].layouts.find(x=>x.si===slot.si)));
+}
+function plan(art,rng=Math.random){const shuffle=a=>QuestionEngine.shuffle(a,rng);const feathers=featherPlan(art,shuffle),accessories=shuffle(art.slots.filter(x=>x.si>=9&&x.si<=11)).slice(0,2).map(slot=>{const variants=slot.si===9?art.headVariants:slot.si===10?art.faceVariants:null;return variants?.length?{...slot,...variants[Math.floor(rng()*variants.length)],si:slot.si}:slot;}),footSlot=art.slots.find(x=>x.si===12),foot=art.footVariants?.length?art.footVariants[Math.floor(rng()*art.footVariants.length)]:null,feet=foot?{...footSlot,...foot,si:12}:footSlot;return shuffle([...feathers,...accessories,feet]).map(slot=>({si:slot.si,id:slot.asset,slot}));}
 function badge(art,slot){if(slot.si>=9){return [slot.x,slot.y-({9:11,10:4,11:4,12:11}[slot.si])];}const c=art.centers[slot.asset],pivot=slot.pivot||[.5,1],a=slot.rot*Math.PI/180,dx=(c[0]-pivot[0])*slot.scale*100,dy=(c[1]-pivot[1])*slot.scale*100;return [slot.x+dx*Math.cos(a)-dy*Math.sin(a),slot.y+dx*Math.sin(a)+dy*Math.cos(a)];}
 class View extends TreeReward.View {
  reset(){this.run++;this.busy=false;this.finished=false;this.close();this.state=new TreeReward.Progress(plan(this.art));this.picture.replaceChildren();this.picture.className='reward-picture pfau-picture';this.picture.style.aspectRatio='1';this.picture.setAttribute('role','img');this.picture.setAttribute('tabindex','-1');
@@ -12,3 +18,4 @@ class View extends TreeReward.View {
 }
 root.PeacockReward={plan,badge,View};if(typeof module!=='undefined')module.exports=root.PeacockReward;
 })(globalThis);
+
