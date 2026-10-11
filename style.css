@@ -29,3 +29,23 @@
 .matschwiese-picture .knurpsel-enter{animation:matschwiese-in 1.5s ease-in-out forwards}
 @keyframes matschwiese-out{from{opacity:1}to{opacity:0}}
 @keyframes matschwiese-in{from{opacity:0}to{opacity:1}}
+
+/* Card count and orientation determine the complete layout. */
+#board{gap:10px}
+#board[data-size="6"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+#board[data-size="9"],#board[data-size="12"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(orientation:landscape){#board[data-size="12"]{grid-template-columns:repeat(4,minmax(0,1fr))}}
+#board .card{padding:5px}
+#board .answer img{height:var(--card-image-height,150px)}
+body.playing footer{display:none}
+body.playing .top{padding-top:10px;padding-bottom:10px}
+body.playing main{padding-top:0;padding-bottom:16px}
+body.playing .progress{margin:8px 0 10px}
+body.playing .feedbackRow{min-height:48px;padding:5px 0 10px;flex-direction:row;align-items:center;gap:8px}
+body.playing .feedbackRow p{margin:0;font-size:14px}
+body.playing .feedbackRow .primary{padding:10px 12px;white-space:normal}
+body.playing .taskLayout{grid-template-columns:minmax(0,1fr) 80px;gap:8px}
+body.playing .questionBox{padding:10px 12px}
+body.playing .questionBox h1{font-size:clamp(20px,2.6vw,30px);margin:4px 0 0;line-height:1.25}
+body.playing .reward-panel p{font-size:11px;margin:3px 0}
+@media(max-height:500px){body.playing .brand small,body.playing .questionBox .eyebrow{display:none}body.playing .top{padding-top:5px;padding-bottom:5px}}

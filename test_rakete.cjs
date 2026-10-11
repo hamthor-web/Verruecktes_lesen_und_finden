@@ -20,7 +20,7 @@ const get=code=>vm.runInContext(code,context);
 (async()=>{
 const config=JSON.parse(fs.readFileSync('rakete-fortschritt.json'));assert.deepEqual(Array.from(get('RocketReward.stages').slice(1)),config.steps.map(x=>x.image));for(const step of config.steps)assert(fs.existsSync(step.image));
 
-for(const mode of ['rakete'])for(const size of [6,8,10,12])for(const level of [1,2,3]){
+for(const mode of ['rakete'])for(const size of [6,9,12])for(const level of [1,2,3]){
  ids.rewardChoice.value=mode;
  ids.size.value=String(size);ids.group.value='0';get('level='+level);get('start()');if(mode==='pfau'){assert.equal(get('reward.state.round.filter(x=>x.si<=8).length'),7);assert.equal(get('reward.state.round.filter(x=>x.si>=9&&x.si<=11).length'),2);assert.equal(get('reward.state.round.filter(x=>x.si===12).length'),1);}
  assert.equal(get('reward.current.tag'),'div');assert.equal(get('reward.state.progress'),0);const plan=get('reward.state.round.map(x=>x.si+":"+x.id).join("|")');assert.equal(get('reward.picture.children.length'),1);
@@ -44,6 +44,6 @@ for(const mode of ['rakete'])for(const size of [6,8,10,12])for(const level of [1
 get('start()');const pending=context.choose(get('round.deck.find(c=>c.id===round.answer)'),new Node());get('show("setup")');await pending;assert.equal(ids.treeDialog.open,false);get('start()');assert.equal(get('reward.state.progress'),0);assert.equal(get('reward.picture.children.length'),1);
 // Cancelling the inspection also releases the pending answer without advancing.
 get('start()');const inspection=context.choose(get('round.deck.find(c=>c.id===round.answer)'),new Node());for(let flush=0;flush<12;flush++)await Promise.resolve();assert.equal(ids.treeDialog.open,true);get('show("setup")');await inspection;assert.equal(ids.treeDialog.open,false);assert.equal(ids.next.hidden,true);
-console.log('OK: 12 vollständige Raketen-Runden mit zehn Bildwechseln, Fehlversuchen, Doppelklicks, Betrachtungspausen, Tastaturbedienung, Abschluss und Abbruch.');
+console.log('OK: 9 vollständige Raketen-Runden mit zehn Bildwechseln, Fehlversuchen, Doppelklicks, Betrachtungspausen, Tastaturbedienung, Abschluss und Abbruch.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
 

@@ -4,7 +4,7 @@ assert.equal(m.length,1080);assert.equal(new Set(m.map(q=>q.id)).size,1080);
 for(const c of d.cards){const qs=m.filter(q=>q.target===c.id);assert.equal(qs.length,9);for(let s=1;s<=3;s++)assert.equal(qs.filter(q=>q.level===s).length,3);}
 for(const q of m){const c=d.cards.find(c=>c.id===q.target);assert(E.matches(c,q));assert.equal(q.conditions.filter(x=>x.exclude).length,q.level===3?1:0);assert.equal(q.conditions.filter(x=>!x.exclude).length,q.level===1?1:2);assert.equal(q.variants.length,7);for(const text of q.variants){assert(!/undefined|null|Häschen/.test(text));assert(text.length<310);}}
 let seed=113;const rng=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};let count=0;
-for(let group=0;group<=20;group++)for(let level=1;level<=3;level++)for(const size of [6,8,10,12]){const used=[];for(let i=0;i<10;i++){
+for(let group=0;group<=20;group++)for(let level=1;level<=3;level++)for(const size of [6,9,12]){const used=[];for(let i=0;i<10;i++){
  const r=E.makeRound(d,m,{group,level,size,used},rng);used.push(r.question.id);assert.equal(r.deck.length,size);assert.equal(new Set(r.deck.map(c=>c.id)).size,size);assert(E.valid(r.question,r.deck));assert.equal(r.deck.filter(c=>E.matches(c,r.question)).length,1);assert.equal(r.answer,r.question.target);if(group)assert.equal(r.question.group,group);if(level===3)assert.equal(r.deck.filter(c=>E.matches(c,r.question,true)).length,2);count++;
 }}
 // Deliberately ambiguous displays and redundant exclusions must be rejected.
