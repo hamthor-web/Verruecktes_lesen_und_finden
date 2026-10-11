@@ -58,3 +58,9 @@ Zusätzliche Fortschrittsauswahl mit zehn Bildstufen. Start: Fragezeichen; die e
 Weitere Fortschrittsgeschichte mit zehn Originalseiten aus Heikes Canva-Serie. Vor der ersten Lösung erscheint ein Fragezeichen. Danach zeigen zehn Lösungen der Reihe nach den Baum, die Plattform, das alte Haus, Fenster und Blumen, Leiter, Tier auf der Leiter, Beleuchtung, Eule, Vögel und Sonne. Die Bilder bleiben vollständig und unverzerrt in der großen Anzeige. Das vorige Bild bleibt zunächst zwei Sekunden stehen; anschließend folgt eine ruhige zweisekündige Überblendung. Weitergehen erfolgt ausschließlich durch Antippen. Nur am Ende erscheint „Dein Baumhaus ist jetzt fertig!“. Alle Bilder liegen verlustfrei als WebP mit 1000 × 1000 Pixeln unter `assets/baumhaus/`.
 
 `node test_baumhaus.cjs` prüft neun Runden, Bilddateien und Reihenfolge, Fehlversuche, Doppeltipps, Betrachtungspause, Überblenddauer, Tastaturbedienung, Abschluss und Abbruch.
+
+## Chaos im Kinderzimmer
+
+Weitere Fortschrittsgeschichte mit zehn Originalseiten aus Heikes Canva-Serie (DAHXvVnCyJc). Vor der ersten Lösung erscheint ein Fragezeichen. Die zehn Lösungen zeigen das Zimmer, den Wirbelsturm, das herumfliegende Chaos, die braune Pfütze, grünen Schleim, die Spinne, ein riesiges Eis, das schlafende Kind mit Traumblase, die Fee im dunklen Zimmer und das wieder ruhige Zimmer. Die 1000 × 1000 Pixel großen Originalbilder liegen verlustfrei als WebP unter `assets/kinderzimmer/`. Zwei Sekunden Betrachtung des vorigen Bildes, danach zwei Sekunden sanfte Überblendung in großer unverzerrter Darstellung. Das neue Bild bleibt bis Weiter oder bewusstem Antippen stehen. Nur nach der zehnten Lösung erscheint „War das alles nur ein Traum?“.
+
+`node test_kinderzimmer.cjs` prüft neun vollständige Runden, feste Bildfolge, Fehlversuche, Doppeltipps, Betrachtungspausen, Abschluss, Tastaturbedienung und Abbruch sowie die beiden Übergangszeiten.

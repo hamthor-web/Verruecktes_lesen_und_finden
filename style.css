@@ -84,3 +84,10 @@ body.playing .reward-panel p{font-size:11px;margin:3px 0}
 .marsmission-picture .knurpsel-leave{animation:unterwasserwelt-out 2s ease-in-out forwards}
 .marsmission-picture .knurpsel-enter{animation:unterwasserwelt-in 2s ease-in-out forwards}
 #treeLarge .marsmission-picture{--reward-ratio:1}
+
+/* Keep the bedroom scene aligned during each gentle reveal. */
+.kinderzimmer-picture{aspect-ratio:1;background:#dcd1d3}
+.kinderzimmer-picture .knurpsel-frame{transform-origin:center}
+.kinderzimmer-picture .knurpsel-leave{animation:unterwasserwelt-out 2s ease-in-out forwards}
+.kinderzimmer-picture .knurpsel-enter{animation:unterwasserwelt-in 2s ease-in-out forwards}
+#treeLarge .kinderzimmer-picture{--reward-ratio:1}
