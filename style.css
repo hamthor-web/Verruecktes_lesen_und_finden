@@ -68,3 +68,12 @@ body.playing .reward-panel p{font-size:11px;margin:3px 0}
 #treeLarge .rakete-picture,#treeLarge .matschwiese-picture,#treeLarge .unterwasserwelt-picture{--reward-ratio:1}
 #treeContinue{flex:none;margin:10px auto 0;padding:12px 22px}
 #treeDialog #treeContinue[hidden]{display:block!important;visibility:hidden;pointer-events:none}
+
+/* Keep the treehouse scene still while the new details appear. */
+.baumhaus-picture{aspect-ratio:1;background:#b0d356}
+.baumhaus-picture .knurpsel-frame{transform-origin:center}
+.baumhaus-picture .knurpsel-leave{animation:baumhaus-out 2s ease-in-out forwards}
+.baumhaus-picture .knurpsel-enter{animation:baumhaus-in 2s ease-in-out forwards}
+@keyframes baumhaus-out{from{opacity:1}to{opacity:0}}
+@keyframes baumhaus-in{from{opacity:0}to{opacity:1}}
+#treeLarge .baumhaus-picture{--reward-ratio:1}

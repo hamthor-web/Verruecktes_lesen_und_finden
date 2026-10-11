@@ -52,3 +52,9 @@ Fünfte Fortschrittsgeschichte: zehn unveränderte JPEG-Bilder in fester Reihenf
 ## Unterwasserwelt
 
 Zusätzliche Fortschrittsauswahl mit zehn Bildstufen. Start: Fragezeichen; die erste Lösung zeigt das leere Meer, die zehnte die offene Schatztruhe. Das bisherige Bild bleibt im Dialog zwei Sekunden unverändert stehen. Danach überblenden die ausgerichteten Bilder zwei Sekunden lang. Das neue Bild bleibt bis zum Antippen von Weiter sichtbar. Nur am Ende erscheint „Du hast den Schatz gefunden!“. Die Originalbilder wurden mit 1000 × 1000 Pixeln als WebP gespeichert. `node test_unterwasserwelt.cjs` prüft die vollständigen Runden und den Ablauf mit kontrollierten Timern.
+
+## Baumhaus
+
+Weitere Fortschrittsgeschichte mit zehn Originalseiten aus Heikes Canva-Serie. Vor der ersten Lösung erscheint ein Fragezeichen. Danach zeigen zehn Lösungen der Reihe nach den Baum, die Plattform, das alte Haus, Fenster und Blumen, Leiter, Tier auf der Leiter, Beleuchtung, Eule, Vögel und Sonne. Die Bilder bleiben vollständig und unverzerrt in der großen Anzeige. Das vorige Bild bleibt zunächst zwei Sekunden stehen; anschließend folgt eine ruhige zweisekündige Überblendung. Weitergehen erfolgt ausschließlich durch Antippen. Nur am Ende erscheint „Dein Baumhaus ist jetzt fertig!“. Alle Bilder liegen verlustfrei als WebP mit 1000 × 1000 Pixeln unter `assets/baumhaus/`.
+
+`node test_baumhaus.cjs` prüft neun Runden, Bilddateien und Reihenfolge, Fehlversuche, Doppeltipps, Betrachtungspause, Überblenddauer, Tastaturbedienung, Abschluss und Abbruch.
