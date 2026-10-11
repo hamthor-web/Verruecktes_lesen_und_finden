@@ -1,6 +1,6 @@
 # Verrückt gesucht! – Lesen und Bilder finden
 
-Spielversion 2026-10-11: vollständiger Lese- und Suchspielprototyp mit 120 Bildkarten in 20 Motivgruppen, drei Schwierigkeitsstufen sowie Pfau, Baum und Knurpsel als Fortschrittsanzeige.
+Spielversion 2026-10-11: vollständiger Lese- und Suchspielprototyp mit 120 Bildkarten in 20 Motivgruppen, drei Schwierigkeitsstufen sowie Pfau, Baum, Knurpsel und Rakete als Fortschrittsanzeige.
 
 ## Spielen
 
@@ -34,3 +34,9 @@ Der Pfau verwendet sieben von acht Federplätzen, zwei Schmuckplätze und einen 
 Als dritte Fortschrittsfigur wählbar. Ein Startbild und zehn feste Bildstufen aus Heikes ZIP: Punkte, Nasenklingel, kleine Ohren, großes Ohr, Flügel, gelbe Flosse, blaue Flosse, Propeller, Leuchtbauch mit Augenglas, Nebel mit Mondgesicht. Originalbilder bleiben unverändert und werden auf einer einheitlichen weißen Fläche angezeigt. Beim Wechsel schrumpft und verschwimmt das alte Bild; das neue wächst und wird scharf (eine Sekunde). Bei reduzierter Bewegung wird der Wechsel ohne Animation gezeigt. Danach bleibt die Figur unbegrenzt groß, bis Weiter oder das Bild angetippt wird. Nach Stufe zehn bleibt das fertige Monster bis zum manuellen Rundenabschluss sichtbar.
 
 `knurpsel.js` nutzt den gemeinsamen Fortschrittszähler und Dialog. `assets/knurpsel/stufe-00.png` bis `stufe-10.png` sind die elf Bilder. `node test_knurpsel.cjs` prüft zwölf vollständige Runden (alle Kartenzahlen und Schwierigkeitsstufen), Fehlversuche, Doppeltipps, Tastaturbedienung, Betrachtungspausen, Abschluss und Abbruch. Die bisherigen Tests für Pfau, Baum und Fragenmatrix bestehen weiterhin. Kein Browser-/Gerätetest verfügbar.
+
+## Rakete
+
+Vierte auswählbare Fortschrittsfigur mit zehn Originalbildern aus dem Raketenpaket. Vor der ersten Lösung erscheint ein Fragezeichen, danach nach Aufgabe n genau `assets/rakete/rakete-nn.png`. Die Bildfolge bleibt fest: Rakete, Flamme, erstes Auge, zweites Auge, Mund mit Zunge, großer Haken, Leiter, Astronaut, Sternschnuppe, Sternenhimmel. Ein 650-ms-Übergang lässt das vorige Bild schrumpfen und verschwimmen und das nächste wachsen. Alle Bilder werden vollständig und unverzerrt in einer quadratischen Fläche angezeigt. Nach dem Bildwechsel bleibt die Anzeige ruhig und wartet auf Weiter oder das Antippen des Bildes. Auch der Sternenhimmel nach Aufgabe zehn bleibt bis zum manuellen Abschluss sichtbar.
+
+`rakete.js` nutzt den vorhandenen Knurpsel-Bildfolgencontroller mit eigener Bildfolge, Dauer und Beschriftung. `rakete-fortschritt.json` beschreibt die Originalfolge. Kein Service Worker vorhanden. `node test_rakete.cjs` prüft alle zwölf Kombinationen von Schwierigkeit und Kartenzahl, die zehn Bildstufen, die leere Ausgangsanzeige, falsche Antworten, Doppeltipps, Betrachtungspausen, Tastatur, Abschluss und Abbruch. Alle bisherigen Tests bestehen weiterhin. Die Darstellung wurde anhand der Bilder und des Layoutcodes geprüft; kein Browser-/Gerätetest verfügbar.
