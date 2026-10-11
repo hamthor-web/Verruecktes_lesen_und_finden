@@ -31,7 +31,7 @@ for(const mode of ['rakete'])for(const size of [6,8,10,12])for(const level of [1
   for(let flush=0;flush<12;flush++)await Promise.resolve();
   assert.equal(ids.treeDialog.open,true,'Every earned detail stays large until a tap');
   assert.equal(get('reward.waiting'),true);assert.equal(ids.next.hidden,true);
-  assert.equal(ids.treeContinue.hidden,false);
+  assert.equal(ids.treeTitle.textContent,i===10?"Deine Rakete ist jetzt fertig.":'');assert.equal(get('reward.art.duration'),2000);assert.equal(ids.treeContinue.hidden,false);
   if(i%3===0)ids.treeContinue.onclick();
   else if(i%3===1)get('reward.picture.onclick()');
   else get('reward.picture.listeners.keydown[0]({key:"Enter",preventDefault(){}})');
