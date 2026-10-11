@@ -57,3 +57,14 @@ body.playing .reward-panel p{font-size:11px;margin:3px 0}
 .unterwasserwelt-picture .knurpsel-enter{animation:unterwasserwelt-in 2s ease-in-out forwards}
 @keyframes unterwasserwelt-out{from{opacity:1}to{opacity:0}}
 @keyframes unterwasserwelt-in{from{opacity:0}to{opacity:1}}
+
+/* Use the available screen for inspecting every progress picture. */
+#treeDialog{width:98vw;height:98dvh;max-width:98vw;max-height:98dvh;padding:10px;padding-bottom:max(10px,env(safe-area-inset-bottom));box-sizing:border-box}
+#treeDialog[open]{display:flex;flex-direction:column}
+#treeDialog h2{flex:none;margin:0 0 8px;font-size:clamp(18px,3vw,28px)}
+#treeLarge{flex:1;min-height:0;width:100%;margin:0;container-type:size;display:flex;align-items:center;justify-content:center}
+#treeLarge .reward-picture{width:min(100cqw,calc(100cqh * var(--reward-ratio,.962)));flex:none;margin:auto}
+#treeLarge .knurpsel-picture{--reward-ratio:.948}
+#treeLarge .rakete-picture,#treeLarge .matschwiese-picture,#treeLarge .unterwasserwelt-picture{--reward-ratio:1}
+#treeContinue{flex:none;margin:10px auto 0;padding:12px 22px}
+#treeDialog #treeContinue[hidden]{display:block!important;visibility:hidden;pointer-events:none}
