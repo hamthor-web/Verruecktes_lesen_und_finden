@@ -45,6 +45,13 @@ for(const mode of ['matschwiese'])for(const size of [6,8,10,12])for(const level 
 get('start()');const pending=context.choose(get('round.deck.find(c=>c.id===round.answer)'),new Node());get('show("setup")');await pending;assert.equal(ids.treeDialog.open,false);get('start()');assert.equal(get('reward.state.progress'),0);assert.equal(get('reward.picture.children.length'),1);
 // Cancelling the inspection also releases the pending answer without advancing.
 get('start()');const inspection=context.choose(get('round.deck.find(c=>c.id===round.answer)'),new Node());for(let flush=0;flush<12;flush++)await Promise.resolve();assert.equal(ids.treeDialog.open,true);get('show("setup")');await inspection;assert.equal(ids.treeDialog.open,false);assert.equal(ids.next.hidden,true);
+// Switching from the peacock to meadow must remove every peacock picture.
+ids.rewardChoice.value='pfau';get('start()');assert.equal(get('reward.art.kind'),'pfau');
+ids.rewardChoice.value='matschwiese';get('start()');assert.equal(get('reward.art.kind'),'matschwiese');
+assert.equal(ids.treeMount.children.length,1);assert.equal(get('reward.picture.querySelectorAll(".pfau-base").length'),0);
+assert.equal(get('reward.picture.querySelectorAll(".pfau-piece").length'),0);
+for(const [,path] of html.matchAll(/(?:src|href)="([^"?]+\.(?:js|css))\?v=([^" ]+)"/g))assert(fs.existsSync(path));
+assert(html.includes('app.js?v=20261011-matschwiese-2'));
 // Controlled timers verify the old picture remains unchanged for the full hold.
 const timers=[];context.setTimeout=(fn,ms)=>{timers.push({fn,ms});return 1;};context.window.matchMedia=()=>({matches:false});
 get('start()');
