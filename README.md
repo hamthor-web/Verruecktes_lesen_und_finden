@@ -42,3 +42,9 @@ Vierte auswählbare Fortschrittsfigur mit zehn Originalbildern aus dem Raketenpa
 `rakete.js` nutzt den vorhandenen Knurpsel-Bildfolgencontroller mit eigener Bildfolge, Dauer und Beschriftung. `rakete-fortschritt.json` beschreibt die Originalfolge. Kein Service Worker vorhanden. `node test_rakete.cjs` prüft alle zwölf Kombinationen von Schwierigkeit und Kartenzahl, die zehn Bildstufen, die leere Ausgangsanzeige, falsche Antworten, Doppeltipps, Betrachtungspausen, Tastatur, Abschluss und Abbruch. Alle bisherigen Tests bestehen weiterhin. Die Darstellung wurde anhand der Bilder und des Layoutcodes geprüft; kein Browser-/Gerätetest verfügbar.
 
 Rakete und Knurpsel verwenden zwei Sekunden pro Bildwechsel. Die Zwischenbilder erscheinen ohne Überschrift. Nur am Ende steht „Deine Rakete ist jetzt fertig.“ beziehungsweise „Dein Knurpsel ist jetzt fertig.“ Die Anzeige bleibt bis zum Weiterklicken sichtbar.
+
+## Matschwiese
+
+Fünfte Fortschrittsgeschichte: zehn unveränderte JPEG-Bilder in fester Reihenfolge. Vor jedem Wechsel bleibt das vorherige Bild im großen Dialog volle zwei Sekunden unverändert sichtbar, auch bei reduzierter Bewegung. Danach 1,5 Sekunden sanfte Überblendung. Das neue Bild bleibt bis Weiter oder bewusstem Antippen sichtbar. Keine erklärenden Zwischenüberschriften; nur zum Abschluss „Deine Matschgeschichte ist jetzt fertig!“. Die gemeinsame Steuerung gibt auch Knurpsel und Rakete die Betrachtungspause von zwei Sekunden und blendet deren Zwischenüberschriften aus. Pfau und Baum zeigen ihre Überschriften weiterhin.
+
+`node test_matschwiese.cjs` prüft zwölf Runden, Reihenfolge, Titel, manuelle Betrachtung, Fehlversuche, Mehrfachtipps, Tastatur, Abschluss und Abbruch.

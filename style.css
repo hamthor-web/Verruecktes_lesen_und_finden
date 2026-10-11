@@ -22,3 +22,10 @@
 @keyframes rakete-enter{from{opacity:0;transform:scale(.75)}to{opacity:1;transform:scale(1)}}
 
 #treeTitle:empty{display:none}
+
+.matschwiese-picture{aspect-ratio:1;background:#b0d356}
+.matschwiese-picture .knurpsel-frame{transform-origin:center}
+.matschwiese-picture .knurpsel-leave{animation:matschwiese-out 1.5s ease-in-out forwards}
+.matschwiese-picture .knurpsel-enter{animation:matschwiese-in 1.5s ease-in-out forwards}
+@keyframes matschwiese-out{from{opacity:1}to{opacity:0}}
+@keyframes matschwiese-in{from{opacity:0}to{opacity:1}}

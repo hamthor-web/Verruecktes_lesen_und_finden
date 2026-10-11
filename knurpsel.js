@@ -14,8 +14,10 @@ class View extends TreeReward.View {
   const info=this.state.award(taskId);if(!info)return false;
   this.busy=true;const run=this.run;
   const title=document.getElementById('treeTitle'),button=document.getElementById('treeContinue');
-  title.textContent='';this.dialog.setAttribute('aria-labelledby','treeCounter');button.hidden=true;
+  title.textContent='';title.hidden=true;this.dialog.setAttribute('aria-labelledby','treeCounter');button.hidden=true;
   document.getElementById('treeLarge').append(this.picture);document.body.classList.add('treeOpen');this.dialog.showModal();
+  await new Promise(resolve=>setTimeout(resolve,2000));
+  if(run!==this.run)return false;
   const incoming=this.preloaded[info.stage];
   if(typeof incoming.decode==='function'){try{await incoming.decode();}catch(error){/* The browser can retry the normal image load. */}}
   if(run!==this.run)return false;
@@ -26,7 +28,8 @@ class View extends TreeReward.View {
   outgoing.remove();incoming.classList.remove('knurpsel-enter');this.current=incoming;
   this.update();this.busy=false;this.finished=this.state.complete;this.waiting=true;
   this.picture.setAttribute('role','button');this.picture.setAttribute('tabindex','0');this.picture.setAttribute('aria-label',this.art.name+(this.finished?' anschauen und Runde beenden':' anschauen und weiterspielen'));
-  title.textContent=this.finished?(this.art.kind==='rakete'?'Deine Rakete ist jetzt fertig.':'Dein Knurpsel ist jetzt fertig.'):'';
+  title.hidden=!this.finished;
+  title.textContent=this.finished?(this.art.finishText||(this.art.kind==='rakete'?'Deine Rakete ist jetzt fertig.':'Dein Knurpsel ist jetzt fertig.')):'';
   this.dialog.setAttribute('aria-labelledby',this.finished?'treeTitle':'treeCounter');
   button.textContent=this.finished?'Runde beenden →':'Weiter →';button.hidden=false;button.focus();
   // No timer dismisses the picture: only the child's tap resolves the award.
