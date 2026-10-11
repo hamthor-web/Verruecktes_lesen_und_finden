@@ -77,3 +77,10 @@ body.playing .reward-panel p{font-size:11px;margin:3px 0}
 @keyframes baumhaus-out{from{opacity:1}to{opacity:0}}
 @keyframes baumhaus-in{from{opacity:0}to{opacity:1}}
 #treeLarge .baumhaus-picture{--reward-ratio:1}
+
+/* Reveal each Mars scene gently without moving the landscape. */
+.marsmission-picture{aspect-ratio:1;background:#dfaa58}
+.marsmission-picture .knurpsel-frame{transform-origin:center}
+.marsmission-picture .knurpsel-leave{animation:unterwasserwelt-out 2s ease-in-out forwards}
+.marsmission-picture .knurpsel-enter{animation:unterwasserwelt-in 2s ease-in-out forwards}
+#treeLarge .marsmission-picture{--reward-ratio:1}
