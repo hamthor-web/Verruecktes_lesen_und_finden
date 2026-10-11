@@ -1,6 +1,6 @@
 # Verrückt gesucht! – Lesen und Bilder finden
 
-Spielversion 2026-10-11: vollständiger Lese- und Suchspielprototyp mit 120 Bildkarten in 20 Motivgruppen, drei Schwierigkeitsstufen sowie Pfau und Baum als Fortschrittsanzeige.
+Spielversion 2026-10-11: vollständiger Lese- und Suchspielprototyp mit 120 Bildkarten in 20 Motivgruppen, drei Schwierigkeitsstufen sowie Pfau, Baum und Knurpsel als Fortschrittsanzeige.
 
 ## Spielen
 
@@ -28,3 +28,9 @@ Der Pfau verwendet sieben von acht Federplätzen, zwei Schmuckplätze und einen 
 
 `node test_engine.cjs` prüft 1080 Fragen, 7560 Formulierungen und 2520 Kartenauslagen.
 `node test_tree.cjs` prüft 1000 Baumpläne, 1000 Pfaupläne und 24 vollständige simulierte Spielrunden einschließlich Fehlversuchen, Doppelklicks, Variantenwahl, erhaltenen Beinen, dauerhaften Teilen und Abschlussanzeige. Bilddateien und lokale Bildverweise sind zusätzlich geprüft. Kein automatisierter Browser-/Gerätetest verfügbar.
+
+## Knurpsel
+
+Als dritte Fortschrittsfigur wählbar. Ein Startbild und zehn feste Bildstufen aus Heikes ZIP: Punkte, Nasenklingel, kleine Ohren, großes Ohr, Flügel, gelbe Flosse, blaue Flosse, Propeller, Leuchtbauch mit Augenglas, Nebel mit Mondgesicht. Originalbilder bleiben unverändert und werden auf einer einheitlichen weißen Fläche angezeigt. Beim Wechsel schrumpft und verschwimmt das alte Bild; das neue wächst und wird scharf (eine Sekunde). Bei reduzierter Bewegung wird der Wechsel ohne Animation gezeigt. Danach bleibt die Figur unbegrenzt groß, bis Weiter oder das Bild angetippt wird. Nach Stufe zehn bleibt das fertige Monster bis zum manuellen Rundenabschluss sichtbar.
+
+`knurpsel.js` nutzt den gemeinsamen Fortschrittszähler und Dialog. `assets/knurpsel/stufe-00.png` bis `stufe-10.png` sind die elf Bilder. `node test_knurpsel.cjs` prüft zwölf vollständige Runden (alle Kartenzahlen und Schwierigkeitsstufen), Fehlversuche, Doppeltipps, Tastaturbedienung, Betrachtungspausen, Abschluss und Abbruch. Die bisherigen Tests für Pfau, Baum und Fragenmatrix bestehen weiterhin. Kein Browser-/Gerätetest verfügbar.
