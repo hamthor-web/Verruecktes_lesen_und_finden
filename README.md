@@ -72,3 +72,7 @@ Zehn überarbeitete Canva-Seiten (DAHXxx3zRx0) erzählen vom Wachstum einer Eich
 ## Blumenwiese (12.10.2026)
 
 Zehn freigegebene Canva-Bilder zeigen den Vogel, das fallende Teilchen und die wachsende Blume bis zum Kind neben der Blüte. Die Folge steht in der manuellen Auswahl und im Zufallszyklus ohne Wiederholungen bereit. Nach Abschluss erscheint sie in „Meine Bilder noch einmal ansehen“. Vor jedem Bildwechsel bleibt die vorherige Stufe zwei Sekunden sichtbar; danach folgt der ruhige zweisekündige Übergang. Das große Bild bleibt bis zum Antippen stehen. Weiter öffnet direkt die nächste Aufgabe. Abschlusstext: „Aus etwas Kleinem ist etwas Schönes gewachsen!“
+
+## Ruhige Überblendungen (12.10.2026)
+
+Alle neun Bildfolgen verwenden dieselben Übergänge: Das vorherige Bild verblasst, während gleichzeitig das nächste bei unveränderter Größe sichtbar wird. Es gibt keine Zoombewegung oder Unschärfe. Die bisherigen Betrachtungspausen und Übergangsdauern bleiben erhalten. Beim Pfau und beim verrückten Baum erscheinen neue Elemente ebenfalls ohne Größenänderung direkt an ihrem vorgesehenen Platz.

@@ -18,9 +18,22 @@ ids.rewardChoice.options=[...html.matchAll(/<option value="([^"]+)">([^<]+)<\/op
 const storage=new Map();const localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)};
 const delays=[];
 const context=vm.createContext({localStorage,document:doc,window:{scrollTo(){},matchMedia:()=>({matches:true})},setTimeout:(f,ms)=>{delays.push(ms);f();return 1;},console});
-for(const name of ['pfau-art.js','tree-art.js','tree.js','data.js','engine.js','pfau.js','knurpsel.js','rakete.js','matschwiese.js','unterwasserwelt.js','blumenwiese.js','app.js'])vm.runInContext(fs.readFileSync('./'+name,'utf8'),context);
+for(const name of ['pfau-art.js','tree-art.js','tree.js','data.js','engine.js','pfau.js','knurpsel.js','rakete.js','matschwiese.js','unterwasserwelt.js','blumenwiese.js','wundereiche.js','baumhaus.js','marsmission.js','kinderzimmer.js','app.js'])vm.runInContext(fs.readFileSync('./'+name,'utf8'),context);
 const get=code=>vm.runInContext(code,context);get('setRewardMode("manual")');
 (async()=>{
+// All full-page stories inherit the shared controller and opacity-only CSS.
+const css=fs.readFileSync('./style.css','utf8');
+for(const name of ['knurpsel-leave','knurpsel-enter','reward-arrive','pfau-arrive']){
+ const rule=css.match(new RegExp('@keyframes '+name+'\\{from\\{([^}]*)\\}to\\{([^}]*)\\}\\}'));
+ assert(rule,name+' exists');assert(!/transform|scale|filter|blur/.test(rule[1]+rule[2]));
+}
+assert(!/\.\w+-picture \.knurpsel-(?:enter|leave)\{animation:/.test(css),'No story overrides the shared crossfade');
+for(const name of ['KnurpselReward','RocketReward','WonderOakReward','FlowerReward','BedroomReward','MarsMissionReward','TreehouseReward','UnderwaterReward','MeadowReward']){
+ const view=get('new '+name+'.View(document.getElementById("treeMount"),document.getElementById("treeCounter"),document.getElementById("treeDialog"),()=>{})');
+ assert(view instanceof context.KnurpselReward.View);assert([1500,2000].includes(view.art.duration));
+}
+get('rewardHistory={used:[],finished:{}}');
+
 assert.equal(get('FlowerReward.stages.length'),11); for(let i=1;i<=10;i++){assert.equal(get('FlowerReward.stages['+i+']'),`assets/blumenwiese/blumenwiese-${String(i).padStart(2,'0')}.webp`);assert(fs.existsSync(get('FlowerReward.stages['+i+']')));}
 
 for(const mode of ['blumenwiese'])for(const size of [6,9,12])for(const level of [1,2,3]){
