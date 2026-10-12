@@ -41,7 +41,7 @@ for(const mode of ['baum','pfau'])for(const size of [6,8,10,12])for(const level 
   else get('reward.picture.listeners.keydown[0]({key:"Enter",preventDefault(){}})');
   await award;
   assert.equal(get('reward.state.progress'),i);const now=get('reward.picture.querySelectorAll(".reward-sprite")');for(const node of previous)assert(now.includes(node),'Previously earned piece must keep its DOM identity');assert.equal(get('reward.picture.querySelectorAll(".pfau-flight").length'),0,'Settled pieces must not retain an animation class');if(mode==='pfau')for(const node of now)for(const image of node.children){assert.equal(image.style.animation,'none');assert.equal(image.style.transform,'none');}if(mode==='pfau'&&get('reward.state.round.slice(0,reward.state.progress).some(x=>x.si===12)')){assert.equal(get('reward.base.src===PFAU_ART.base'),true);assert.equal(get('reward.foreground.src===PFAU_ART.foreground'),true);assert.equal(get('reward.base.style.clipPath===PFAU_ART.clawClip'),true);assert.equal(get('reward.foreground.style.clipPath===PFAU_ART.clawClip'),true);}assert.equal(get('reward.picture.querySelectorAll(".reward-slot").length'),10-i);assert.equal(get('reward.picture.querySelectorAll(".reward-sprite").length'),i);
-  if(i<10){assert.equal(ids.treeDialog.open,false);assert.equal(ids.next.hidden,false);ids.next.onclick();}else{assert.equal(ids.treeDialog.open,false);assert.equal(ids.finish.hidden,false);}
+  if(i<10){assert.equal(ids.treeDialog.open,false);assert.equal(ids.next.hidden,true);assert.equal(get('number'),i+1,'One tap opens the next task');}else{assert.equal(ids.treeDialog.open,false);assert.equal(ids.finish.hidden,false);}
  }
 }
 // Navigating away during an animation cancels stale updates; new round starts empty.

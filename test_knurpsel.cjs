@@ -35,7 +35,7 @@ for(const mode of ['knurpsel'])for(const size of [6,9,12])for(const level of [1,
   else get('reward.picture.listeners.keydown[0]({key:"Enter",preventDefault(){}})');
   await award;
   assert.equal(get('reward.state.progress'),i);assert.equal(get('reward.current.src'),`assets/knurpsel/stufe-${String(i).padStart(2,'0')}.png`);assert.equal(get('reward.picture.children.length'),1);assert.equal(get('reward.picture.querySelectorAll(".knurpsel-enter").length'),0);
-  if(i<10){assert.equal(ids.treeDialog.open,false);assert.equal(ids.next.hidden,false);ids.next.onclick();}else{assert.equal(ids.treeDialog.open,false);assert.equal(ids.finish.hidden,false);}
+  if(i<10){assert.equal(ids.treeDialog.open,false);assert.equal(ids.next.hidden,true);assert.equal(get('number'),i+1,'One tap opens the next task');}else{assert.equal(ids.treeDialog.open,false);assert.equal(ids.finish.hidden,false);}
  }
 }
 // Navigating away during an animation cancels stale updates; new round starts empty.

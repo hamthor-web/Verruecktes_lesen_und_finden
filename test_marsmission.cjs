@@ -19,7 +19,7 @@ const context=vm.createContext({document:doc,window:{scrollTo(){},matchMedia:()=
 for(const name of ['pfau-art.js','tree-art.js','tree.js','data.js','engine.js','pfau.js','knurpsel.js','rakete.js','matschwiese.js','marsmission.js','marsmission.js','app.js'])vm.runInContext(fs.readFileSync('./'+name,'utf8'),context);
 const get=code=>vm.runInContext(code,context);
 (async()=>{
-assert.equal(get('MarsMissionReward.stages.length'),11); for(let i=1;i<=10;i++)assert(fs.existsSync(get('MarsMissionReward.stages['+i+']')));
+assert.equal(get('MarsMissionReward.stages.length'),11); for(let i=1;i<=10;i++)assert(fs.existsSync(get('MarsMissionReward.stages['+i+']').split('?')[0]));
 
 for(const mode of ['marsmission'])for(const size of [6,9,12])for(const level of [1,2,3]){
  ids.rewardChoice.value=mode;
@@ -37,8 +37,8 @@ for(const mode of ['marsmission'])for(const size of [6,9,12])for(const level of 
   else if(i%3===1)get('reward.picture.onclick()');
   else get('reward.picture.listeners.keydown[0]({key:"Enter",preventDefault(){}})');
   await award;
-  assert.equal(get('reward.state.progress'),i);assert.equal(get('reward.current.src'),`assets/marsmission/marsmission-${String(i).padStart(2,'0')}.webp`);assert.equal(get('reward.picture.children.length'),1);assert.equal(get('reward.picture.querySelectorAll(".knurpsel-enter").length'),0);
-  if(i<10){assert.equal(ids.treeDialog.open,false);assert.equal(ids.next.hidden,false);ids.next.onclick();}else{assert.equal(ids.treeDialog.open,false);assert.equal(ids.finish.hidden,false);}
+  assert.equal(get('reward.state.progress'),i);assert.equal(get('reward.current.src').split('?')[0],`assets/marsmission/marsmission-${String(i).padStart(2,'0')}.webp`);assert.equal(get('reward.picture.children.length'),1);assert.equal(get('reward.picture.querySelectorAll(".knurpsel-enter").length'),0);
+  if(i<10){assert.equal(ids.treeDialog.open,false);assert.equal(ids.next.hidden,true);assert.equal(get('number'),i+1,'One tap opens the next task');}else{assert.equal(ids.treeDialog.open,false);assert.equal(ids.finish.hidden,false);}
  }
 }
 // Navigating away during an animation cancels stale updates; new round starts empty.
