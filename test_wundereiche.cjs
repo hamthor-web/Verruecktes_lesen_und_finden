@@ -32,7 +32,7 @@ for(const mode of ['wundereiche'])for(const size of [6,9,12])for(const level of 
   for(let flush=0;flush<12;flush++)await Promise.resolve();
   assert.equal(ids.treeDialog.open,true,'Every earned detail stays large until a tap');
   assert.equal(get('reward.waiting'),true);assert.equal(ids.next.hidden,true);
-  assert.equal(ids.treeContinue.hidden,false);assert.equal(ids.treeTitle.hidden,i<10);if(i===10)assert.equal(ids.treeTitle.textContent,'Deine Wundereiche ist jetzt groß!');assert(delays.includes(2000));
+  assert.equal(ids.treeContinue.hidden,false);assert.equal(ids.treeTitle.hidden,i<10);if(i===10)assert.equal(ids.treeTitle.textContent,'… und jetzt entsteht etwas Neues. Bist auch du bereit?');assert(delays.includes(2000));
   if(i%3===0)ids.treeContinue.onclick();
   else if(i%3===1)get('reward.picture.onclick()');
   else get('reward.picture.listeners.keydown[0]({key:"Enter",preventDefault(){}})');
