@@ -76,3 +76,7 @@ Zehn freigegebene Canva-Bilder zeigen den Vogel, das fallende Teilchen und die w
 ## Ruhige Überblendungen (12.10.2026)
 
 Alle neun Bildfolgen verwenden dieselben Übergänge: Das vorherige Bild verblasst, während gleichzeitig das nächste bei unveränderter Größe sichtbar wird. Es gibt keine Zoombewegung oder Unschärfe. Die bisherigen Betrachtungspausen und Übergangsdauern bleiben erhalten. Beim Pfau und beim verrückten Baum erscheinen neue Elemente ebenfalls ohne Größenänderung direkt an ihrem vorgesehenen Platz.
+
+## Galerie zum Durchblättern (12.10.2026)
+
+„Meine Bilder noch einmal ansehen“ spielt fertige Geschichten ab dem Anfang erneut ab. Ein Antippen des Bildes oder „Nächstes Bild“ blendet zur folgenden Stufe über. „Vorheriges Bild“ geht zurück; am Ende startet „Noch einmal von vorn“ die Folge erneut. Ohne Antippen bleibt das Bild stehen. Die Galerie verändert weder den Spielfortschritt noch den Zufallszyklus. Neue Pfau- und Baumrunden speichern jede Zwischenstufe in der verdienten Reihenfolge. Bereits gespeicherte Bildfolgen verwenden ihre Originalbilder; ältere Pfau-/Baumbilder werden aus der Reihenfolge ihrer vorhandenen Elemente rekonstruiert.

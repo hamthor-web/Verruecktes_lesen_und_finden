@@ -83,3 +83,12 @@ body.playing .reward-panel p{font-size:11px;margin:3px 0}
 /* Flower pages keep their square canvas throughout the shared crossfade. */
 .blumenwiese-picture{aspect-ratio:1;background:#fff}
 #treeLarge .blumenwiese-picture{--reward-ratio:1}
+
+/* Album playback uses two aligned scenes and advances only on a tap. */
+#galleryDialog{width:98vw;height:98dvh;max-width:98vw;max-height:98dvh}
+#galleryPicture{position:relative;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;container-type:size;cursor:pointer}
+#galleryPicture>.reward-picture{grid-area:1/1;align-self:center;justify-self:center;width:min(100cqw,calc(100cqh * var(--reward-ratio,.962)));max-height:none;pointer-events:none}
+#galleryPicture>.knurpsel-picture{--reward-ratio:.948}
+#galleryPicture>.rakete-picture,#galleryPicture>.blumenwiese-picture,#galleryPicture>.wundereiche-picture,#galleryPicture>.kinderzimmer-picture,#galleryPicture>.marsmission-picture,#galleryPicture>.baumhaus-picture,#galleryPicture>.unterwasserwelt-picture,#galleryPicture>.matschwiese-picture,#galleryPicture>.pfau-picture{--reward-ratio:1}
+.gallery-enter{animation:knurpsel-enter 2s ease-in-out forwards}.gallery-leave{animation:knurpsel-leave 2s ease-in-out forwards}
+.gallery-controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.gallery-controls button:disabled{opacity:.5;cursor:default}
