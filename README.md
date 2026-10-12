@@ -68,3 +68,7 @@ Weitere Fortschrittsgeschichte mit zehn Originalseiten aus Heikes Canva-Serie (D
 ## Wundereiche
 
 Zehn überarbeitete Canva-Seiten (DAHXxx3zRx0) erzählen vom Wachstum einer Eichel: Eichel, Erde, Winter, Keimling, Pflanze, junger Baum, großer Baum, Eichhörnchen im Baum, Eichhörnchen beim Vergraben und Sonne über den vergrabenen Eicheln. Eigene Auswahl „Die Wundereiche“. Vor der ersten Lösung erscheint ein Fragezeichen. Zwei Sekunden Betrachtung des vorigen Bildes, anschließend zwei Sekunden Überblendung; das neue Bild bleibt bis zum Antippen stehen. Große, vollständige quadratische Darstellung. Nur am Ende erscheint „… und jetzt entsteht etwas Neues. Bist auch du bereit?“.
+
+## Blumenwiese (12.10.2026)
+
+Zehn freigegebene Canva-Bilder zeigen den Vogel, das fallende Teilchen und die wachsende Blume bis zum Kind neben der Blüte. Die Folge steht in der manuellen Auswahl und im Zufallszyklus ohne Wiederholungen bereit. Nach Abschluss erscheint sie in „Meine Bilder noch einmal ansehen“. Vor jedem Bildwechsel bleibt die vorherige Stufe zwei Sekunden sichtbar; danach folgt der ruhige zweisekündige Übergang. Das große Bild bleibt bis zum Antippen stehen. Weiter öffnet direkt die nächste Aufgabe. Abschlusstext: „Aus etwas Kleinem ist etwas Schönes gewachsen!“
