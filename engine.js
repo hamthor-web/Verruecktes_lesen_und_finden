@@ -43,7 +43,8 @@ function valid(q,deck){const correct=deck.filter(c=>matches(c,q));if(correct.len
 function shuffle(items,rng=Math.random){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function makeRound(data,matrix,options={},rng=Math.random){
  const level=Number(options.level||1),size=Number(options.size||6),used=new Set(options.used||[]),group=Number(options.group||0);
- const candidates=shuffle(matrix.filter(q=>q.level===level&&(!group||q.group===group)&&!used.has(q.id)),rng);
+ const usedTargets=new Set(options.usedTargets||[]),usedKeys=new Set(options.usedKeys||[]);
+ const candidates=shuffle(matrix.filter(q=>q.level===level&&(!group||q.group===group)&&!used.has(q.id)&&!usedTargets.has(q.target)&&!usedKeys.has(searchKey(q))),rng);
  for(const planned of candidates){
   const target=data.cards.find(c=>c.id===planned.target),same=data.cards.filter(c=>c.group===planned.group),deck=[target];
   const add=c=>{if(c&&!deck.some(x=>x.id===c.id))deck.push(c);};
@@ -57,8 +58,22 @@ function makeRound(data,matrix,options={},rng=Math.random){
   const question=available.find(q=>q.id===planned.id);if(!question)continue;
   return {deck:laidOut,question,answer:laidOut.find(c=>matches(c,question)).id};
  }
- if(used.size)return makeRound(data,matrix,{...options,used:[]},rng);
+ // Exhaustion must never silently reset the used target pictures.
  throw new Error('Für diese Auswahl konnte keine eindeutige Aufgabe erstellt werden.');
 }
-const api={buildMatrix,formulate,matches,valid,makeRound,shuffle};root.QuestionEngine=api;if(typeof module!=='undefined')module.exports=api;
+
+// Formulations and target IDs are not part of the searched-feature identity.
+function searchKey(q){return q.group+':'+q.level+':'+q.conditions.map(c=>[c.feature,c.value,!!c.exclude].join('/')).sort().join('|');}
+function planRound(data,matrix,options={},rng=Math.random){
+ const eligible=shuffle(matrix.filter(q=>q.level===Number(options.level||1)&&(!Number(options.group)||q.group===Number(options.group))),rng),edges=new Map();
+ for(const q of eligible){try{const round=makeRound(data,[q],{...options,used:[],usedTargets:[],usedKeys:[]},rng);if(!edges.has(q.target))edges.set(q.target,[]);edges.get(q.target).push({key:searchKey(q),target:q.target,round});}catch{}}
+ const matched=new Map();
+ function assign(target,seen){for(const edge of edges.get(target)||[]){if(seen.has(edge.key))continue;seen.add(edge.key);const prior=matched.get(edge.key);if(!prior||assign(prior.target,seen)){matched.set(edge.key,edge);return true;}}return false;}
+ for(const target of shuffle([...edges.keys()],rng)){assign(target,new Set());if(matched.size>=Number(options.maximum||10))break;}
+ const rounds=shuffle([...matched.values()].map(edge=>edge.round),rng);
+ if(!rounds.length)throw new Error('Für diese Auswahl gibt es keine eindeutige Aufgabe.');return rounds;
+}
+
+const api={buildMatrix,formulate,matches,valid,makeRound,planRound,searchKey,shuffle};root.QuestionEngine=api;if(typeof module!=='undefined')module.exports=api;
 })(globalThis);
+

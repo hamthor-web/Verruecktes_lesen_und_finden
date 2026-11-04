@@ -29,10 +29,10 @@ class View {
  cancel(){this.run++;this.busy=false;this.close();}
  createSprite(info){const sprite=document.createElement('img');sprite.className='reward-sprite reward-flight';sprite.src=this.art.sources[info.id];sprite.alt=info.id.replaceAll('_',' ');let width=info.slot.w;if(info.id==='regenschirm')width+=8;if(info.id==='schielende_katze')width+=6;Object.assign(sprite.style,{left:info.slot.x+'%',top:info.slot.y+'%',width:width+'%'});this.picture.append(sprite);return sprite;}
  settleSprite(sprite){sprite.classList.remove('reward-flight');sprite.classList.add('reward-done');}
- async award(taskId){if(this.busy||this.waiting)return false;const info=this.state.award(taskId);if(!info)return false;this.busy=true;const run=this.run,reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,wait=ms=>new Promise(resolve=>setTimeout(resolve,reduced?20:ms));
- const title=document.getElementById('treeTitle'),button=document.getElementById('treeContinue');title.hidden=false;title.textContent=this.art.kind==='pfau'?'Dein Pfau': 'Ein neues Detail für deinen Baum!';button.hidden=true;document.getElementById('treeLarge').append(this.picture);document.body.classList.add('treeOpen');this.dialog.showModal();await wait(350);if(run!==this.run)return false;
- const sprite=this.createSprite(info);await wait(1100);if(run!==this.run)return false;
- this.settleSprite(sprite);this.picture.querySelector(`[data-si="${info.si}"]`).remove();this.update();this.busy=false;
+ async award(taskId){if(this.busy||this.waiting)return false;const info=this.state.award(taskId);if(!info)return false;this.busy=true;const run=this.run,wait=RewardMotion.pause;
+ const title=document.getElementById('treeTitle'),button=document.getElementById('treeContinue');title.hidden=false;title.textContent=this.art.kind==='pfau'?'Dein Pfau': 'Ein neues Detail für deinen Baum!';button.hidden=true;document.getElementById('treeLarge').append(this.picture);document.body.classList.add('treeOpen');this.dialog.showModal();await wait(2000);if(run!==this.run)return false;
+ const sprite=this.createSprite(info);sprite.style.animation='none';for(const image of sprite.querySelectorAll('.pfau-flight')){image.style.animation='none';image.style.opacity='1';}if(!await RewardMotion.reveal(sprite,()=>run===this.run))return false;
+ this.settleSprite(sprite);this.picture.querySelector(`[data-si="${info.si}"]`).remove();this.earnedFrames??=[];this.earnedFrames.push(this.picture.outerHTML);this.update();this.busy=false;
  this.finished=this.state.complete;this.waiting=true;this.picture.setAttribute('role','button');this.picture.setAttribute('tabindex','0');this.picture.setAttribute('aria-label','Fortschrittsbild schließen und weiterspielen');
  if(this.finished)title.textContent=this.art.kind==='pfau'?'Dein Pfau ist fertig.':'Super! Dein verrückter Baum ist fertig!';
  else title.textContent='Schau dir dein neues Detail an. Tippe zum Weiterspielen auf das Bild.';
@@ -41,3 +41,4 @@ class View {
 }
 const api={plan,Progress,View};root.TreeReward=api;if(typeof module!=='undefined')module.exports=api;
 })(globalThis);
+

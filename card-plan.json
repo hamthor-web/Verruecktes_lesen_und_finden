@@ -8,7 +8,7 @@
           "Nasen",
           [
             "2 schwarze",
-            "1 schwarze und 1 braune"
+            "1 schwarze und 1 gelbe"
           ]
         ],
         [
@@ -30,7 +30,7 @@
       "clauses": [
         [
           "hat zwei schwarze Nasen",
-          "hat eine schwarze und eine braune Nase"
+          "hat eine schwarze und eine gelbe Nase"
         ],
         [
           "hat einen braunen Schwanz",
@@ -44,7 +44,7 @@
       "negatives": [
         [
           "hat nicht zwei schwarze Nasen",
-          "hat keine braune Nase"
+          "hat keine gelbe Nase"
         ],
         [
           "hat keinen braunen Schwanz",
@@ -1202,7 +1202,7 @@
       "group": 1,
       "motif": "Hund",
       "attributes": {
-        "Nasen": "1 schwarze und 1 braune",
+        "Nasen": "1 schwarze und 1 gelbe",
         "Schwanz": "braun",
         "Halsschleife": "rot"
       },
@@ -1212,15 +1212,15 @@
         0
       ],
       "status": "Merkmale geprüft",
-      "source": "libfile_f8df88bcf51481918ad7d3e77bc82829",
-      "note": ""
+      "source": null,
+      "note": "04.11.2026: Nasenfarbe Gelb statt Braun, von Heike gewünscht."
     },
     {
       "id": "VG-01-06",
       "group": 1,
       "motif": "Hund",
       "attributes": {
-        "Nasen": "1 schwarze und 1 braune",
+        "Nasen": "1 schwarze und 1 gelbe",
         "Schwanz": "blau",
         "Halsschleife": "grün"
       },
@@ -1230,8 +1230,8 @@
         1
       ],
       "status": "Merkmale geprüft",
-      "source": "libfile_ac35faa0cdbc8191a2fd4345ff5cfe4d",
-      "note": ""
+      "source": null,
+      "note": "04.11.2026: Nasenfarbe Gelb statt Braun, von Heike gewünscht."
     },
     {
       "id": "VG-02-01",

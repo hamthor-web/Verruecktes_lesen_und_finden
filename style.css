@@ -92,3 +92,14 @@ body.playing .reward-panel p{font-size:11px;margin:3px 0}
 #galleryPicture>.rakete-picture,#galleryPicture>.blumenwiese-picture,#galleryPicture>.wundereiche-picture,#galleryPicture>.kinderzimmer-picture,#galleryPicture>.marsmission-picture,#galleryPicture>.baumhaus-picture,#galleryPicture>.unterwasserwelt-picture,#galleryPicture>.matschwiese-picture,#galleryPicture>.pfau-picture{--reward-ratio:1}
 .gallery-enter{animation:knurpsel-enter 2s ease-in-out forwards}.gallery-leave{animation:knurpsel-leave 2s ease-in-out forwards}
 .gallery-controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.gallery-controls button:disabled{opacity:.5;cursor:default}
+
+
+/* Stable dimensions while text and controls are hidden. */
+#treeLarge{width:100%;min-width:0}#treeLarge .reward-picture{flex:0 0 auto;min-width:0}
+.reward-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:20}
+#successDialog{width:min(92vw,580px);min-height:220px;box-sizing:border-box;padding:36px 22px;text-align:center;background:#faf8ef;color:#315e46;overflow:hidden}
+#successDialog[open]{display:grid;place-items:center}#successDialog::backdrop{background:#183223cc}
+.success-word{font-size:clamp(36px,8vw,66px);font-weight:850;line-height:1.2;max-width:100%}.success-word span{display:inline-block;white-space:pre;animation:success-letter .25s both}
+.success-0{animation:success-grow .5s both}.success-1{animation:success-up .55s both}.success-3{animation:success-hop .65s both}
+@keyframes success-grow{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}@keyframes success-up{from{transform:translateY(65px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes success-hop{0%{transform:translateY(-35px);opacity:0}55%{transform:translateY(9px);opacity:1}78%{transform:translateY(-5px)}100%{transform:translateY(0)}}@keyframes success-letter{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.success-word,.success-word span{animation:none!important}}
