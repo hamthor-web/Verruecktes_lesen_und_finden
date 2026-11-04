@@ -6,12 +6,31 @@ const rewardKey='verrueckt-gesucht-rewards-v1';
 function loadRewards(){try{const obj=JSON.parse(localStorage.getItem(rewardKey)||'{}');return {used:Array.isArray(obj.used)?obj.used.filter(x=>rewardIds.includes(x)):[],finished:obj.finished&&typeof obj.finished==='object'?obj.finished:{}};}catch{return {used:[],finished:{}};}}
 let rewardHistory=loadRewards();
 function saveRewards(){try{localStorage.setItem(rewardKey,JSON.stringify(rewardHistory));}catch(e){console.warn('Fortschrittsbilder konnten nicht dauerhaft gespeichert werden.',e);}}
+// Der Zufallsmodus durchläuft die elf Geschichten, bevor er sie erneut anbietet.
+// Im manuellen Modus sind alle Geschichten jederzeit und auf jeder Spielstufe wählbar.
 function availableRewards(){return rewardIds.filter(id=>!rewardHistory.used.includes(id));}
-function refreshRewardPicker(){if(!availableRewards().length){rewardHistory.used=[];saveRewards();}const avail=availableRewards();$('rewardRemaining').textContent=`${avail.length} von ${rewardIds.length} Geschichten stehen bis zum nächsten Neustart der Auswahl noch bereit.`;for(const o of $('rewardChoice').options){o.disabled=!avail.includes(o.value);o.textContent=o.textContent.replace(/ ✓$/,'')+(avail.includes(o.value)?'':' ✓');}if(!avail.includes($('rewardChoice').value))$('rewardChoice').value=avail[0];}
+function refreshRewardPicker(){
+ const remaining=availableRewards().length;
+ $('rewardRemaining').textContent='Alle 11 Fortschrittsgeschichten sind jederzeit auswählbar. Im Überraschungsmodus wechseln sie ohne Wiederholung, bis alle einmal dran waren.';
+ for(const option of $('rewardChoice').options){
+  option.disabled=false;
+  option.textContent=option.textContent.replace(/ ✓$/,'')+(rewardHistory.finished[option.value]?' ✓':'');
+ }
+}
 function setRewardMode(mode){rewardMode=mode;$('rewardChoiceWrap').hidden=mode!=='manual';for(const [id,on] of [['rewardRandom',mode==='random'],['rewardManual',mode==='manual']]){const b=$(id);b.classList.toggle('selected',on);b.setAttribute('aria-pressed',String(on));}refreshRewardPicker();}
 $('rewardRandom').onclick=()=>setRewardMode('random');$('rewardManual').onclick=()=>setRewardMode('manual');
-function chooseRewardId(){refreshRewardPicker();const avail=availableRewards();return rewardMode==='manual'&&avail.includes($('rewardChoice').value)?$('rewardChoice').value:avail[Math.floor(Math.random()*avail.length)];}
-function rememberReward(){if(!rewardHistory.used.includes(activeRewardId))rewardHistory.used.push(activeRewardId);rewardHistory.finished[activeRewardId]={html:reward.picture.outerHTML,frames:[...rewardFrames,reward.picture.outerHTML],date:new Date().toISOString()};saveRewards();}
+function chooseRewardId(){
+ refreshRewardPicker();
+ if(rewardMode==='manual')return $('rewardChoice').value;
+ let avail=availableRewards();
+ if(!avail.length){rewardHistory.used=[];saveRewards();avail=[...rewardIds];}
+ return avail[Math.floor(Math.random()*avail.length)];
+}
+function rememberReward(){
+ if(!rewardHistory.used.includes(activeRewardId))rewardHistory.used.push(activeRewardId);
+ rewardHistory.finished[activeRewardId]={html:reward.picture.outerHTML,frames:[...rewardFrames,reward.picture.outerHTML],date:new Date().toISOString()};
+ saveRewards();
+}
 
 
 for(const id of ['VG-01-01','VG-03-05','VG-10-03']){const c=data.cards.find(c=>c.id===id),im=document.createElement('img');im.src=c.image;im.alt='';$('sample').append(im);}
