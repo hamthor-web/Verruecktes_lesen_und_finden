@@ -1,6 +1,7 @@
 'use strict';
 (()=>{
  const button=document.getElementById('installApp'),status=document.getElementById('installStatus'),dialog=document.getElementById('installHelp'),help=document.getElementById('installHelpText');
+ const updateButton=document.getElementById('updateApp'),updateStatus=document.getElementById('updateStatus'),updateProgress=document.getElementById('updateProgress');
  if(!button)return;
  let deferred=null;
  const ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -24,6 +25,43 @@
   if(deferred){const p=deferred;deferred=null;try{await p.prompt();const chosen=await p.userChoice;if(chosen.outcome==='accepted')msg('Installation bestätigt. Folge gegebenenfalls den weiteren Hinweisen des Geräts.');else msg('Installation nicht gestartet. Du kannst sie später erneut versuchen.');}catch{help.textContent=guidance();dialog.showModal();}update();return;}
   help.textContent=guidance();dialog.showModal();
  };
+ // Der Ladezähler zählt tatsächlich erfolgreich übertragene Dateien, keine erfundene Zeit.
+ let updating=false,requestId='',lastCount=0,worker=null;
+ const updateMessage=t=>{updateStatus.hidden=false;updateStatus.textContent=t;};
+ function setBusy(on){updating=on;updateButton.disabled=on;updateButton.textContent=on?'Aktualisierung läuft …':'Auf Aktualisierung prüfen';}
+ function finishUpdate(text){setBusy(false);updateMessage(text);}
+ navigator.serviceWorker?.addEventListener('message',event=>{
+  const data=event.data||{};
+  if(data.type!=='VG_UPDATE_PROGRESS'||data.id!==requestId)return;
+  if(data.phase==='progress'){
+   lastCount=data.done;
+   updateProgress.hidden=false;updateProgress.max=data.total;updateProgress.value=data.done;
+   updateMessage('Aktualisierung: '+data.done+' von '+data.total+' Dateien geladen. Bitte noch warten …');
+  }else if(data.phase==='done'){
+   finishUpdate('Alle '+data.total+' Dateien geladen. Die App wird jetzt neu geöffnet.');
+   // Neu öffnen erst nach erfolgreicher, vollständiger Aktualisierung.
+   location.reload();
+  }else if(data.phase==='error')finishUpdate('Aktualisierung fehlgeschlagen: '+(data.message||'Bitte Internetverbindung prüfen und erneut versuchen.'));
+ });
+ async function checkForUpdate(){
+  if(updating)return;
+  if(!('serviceWorker' in navigator)||location.protocol!=='https:'){
+   updateMessage('Die Aktualisierung benötigt eine sichere HTTPS-Verbindung.');return;
+  }
+  setBusy(true);lastCount=0;updateProgress.hidden=true;updateMessage('Suche nach einer neuen Version …');
+  try{
+   const registration=await navigator.serviceWorker.ready;
+   await registration.update();
+   // Auch ohne neue Service-Worker-Version alle App-Dateien kontrolliert auffrischen.
+   const target=navigator.serviceWorker.controller||registration.active;
+   if(!target)throw Error('Offline-Dienst noch nicht bereit. Bitte die App neu öffnen.');
+   requestId='refresh-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+   target.postMessage({type:'VG_REFRESH_SHELL',id:requestId});
+   updateMessage('Aktualisierung wird vorbereitet …');
+  }catch(err){finishUpdate('Aktualisierung nicht möglich: '+err.message);}
+ }
+ if(updateButton)updateButton.addEventListener('click',checkForUpdate);
  if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{msg('Der Installationsdienst ist gerade nicht verfügbar. Du kannst das Spiel trotzdem im Browser nutzen.');});
+
  update();
 })();
