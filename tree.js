@@ -23,7 +23,7 @@ class View {
  dialog.addEventListener('cancel',e=>e.preventDefault());
  }
  reset(){this.run++;this.busy=false;this.finished=false;this.close();this.picture.setAttribute('role','img');this.picture.setAttribute('tabindex','-1');this.state=new Progress(plan(this.art,10));this.picture.replaceChildren();const base=document.createElement('img');base.className='reward-base';base.src=this.art.base;base.alt='Dein verrückter Fortschrittsbaum';this.picture.append(base);
- for(const info of this.state.round){const p=document.createElement('div');p.className='reward-slot';p.dataset.si=info.si;Object.assign(p.style,{left:info.slot.x+'%',top:info.slot.y+'%',width:info.slot.w+'%',height:info.slot.w+'%'});p.textContent='?';p.setAttribute('aria-hidden','true');this.picture.append(p);}this.mount.append(this.picture);this.update();}
+ for(const info of this.state.round){const p=document.createElement('div');p.className='reward-slot';p.dataset.si=info.si;Object.assign(p.style,{left:info.slot.x+'%',top:info.slot.y+'%',width:(info.slot.w/2)+'%',height:(info.slot.w/2)+'%'});p.textContent='?';p.setAttribute('aria-hidden','true');this.picture.append(p);}this.mount.append(this.picture);this.update();}
  update(){this.counter.textContent=this.state.progress+' von 10 gefunden';}
  close(){this.waiting=false;if(this.dismissResolve){this.dismissResolve(false);this.dismissResolve=null;}if(this.dialog.open)this.dialog.close();this.mount.append(this.picture);document.body.classList.remove('treeOpen');}
  cancel(){this.run++;this.busy=false;this.close();}
@@ -31,8 +31,8 @@ class View {
  settleSprite(sprite){sprite.classList.remove('reward-flight');sprite.classList.add('reward-done');}
  async award(taskId){if(this.busy||this.waiting)return false;const info=this.state.award(taskId);if(!info)return false;this.busy=true;const run=this.run,reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,wait=ms=>new Promise(resolve=>setTimeout(resolve,reduced?20:ms));
  const title=document.getElementById('treeTitle'),button=document.getElementById('treeContinue');title.hidden=false;title.textContent=this.art.kind==='pfau'?'Dein Pfau': 'Ein neues Detail für deinen Baum!';button.hidden=true;document.getElementById('treeLarge').append(this.picture);document.body.classList.add('treeOpen');this.dialog.showModal();await wait(350);if(run!==this.run)return false;
- const sprite=this.createSprite(info);await wait(1100);if(run!==this.run)return false;
- this.settleSprite(sprite);this.picture.querySelector(`[data-si="${info.si}"]`).remove();this.update();this.busy=false;
+ const marker=this.picture.querySelector(`[data-si="${info.si}"]`);if(marker)marker.remove();const sprite=this.createSprite(info);sprite.style.animation='none';sprite.style.opacity='0';const pictures=sprite.matches('img')?[sprite]:[...sprite.querySelectorAll('img')];await Promise.race([Promise.all(pictures.map(im=>im.decode?.().catch(()=>{})||Promise.resolve())),wait(5000)]);if(run!==this.run)return false;const duration=reduced?20:1500;const begin=performance.now();await new Promise(resolve=>{const frame=now=>{if(run!==this.run){resolve();return;}const alpha=Math.min(1,(now-begin)/duration);sprite.style.opacity=String(alpha);if(alpha<1)requestAnimationFrame(frame);else resolve();};requestAnimationFrame(frame);});if(run!==this.run)return false;
+ this.settleSprite(sprite);this.update();this.busy=false;
  this.finished=this.state.complete;this.waiting=true;this.picture.setAttribute('role','button');this.picture.setAttribute('tabindex','0');this.picture.setAttribute('aria-label','Fortschrittsbild schließen und weiterspielen');
  if(this.finished)title.textContent=this.art.kind==='pfau'?'Dein Pfau ist fertig.':'Super! Dein verrückter Baum ist fertig!';
  else title.textContent='Schau dir dein neues Detail an. Tippe zum Weiterspielen auf das Bild.';
