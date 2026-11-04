@@ -56,3 +56,20 @@ Die folgenden **sieben UTF-8-Quelldateien** wurden auf `main` geändert und ansc
 Vorheriger `main`-Stand: `7b33f82a8df6268a61fd9cf693ebcd1c9f382e54`. Nach Übertragung aller drei Bilder und der Datenzuordnung am 04.11.2026: `fa9ef68b02797da0c862aac0aa7003850708e2ec` (vorbehaltlich späterer Änderungen).
 
 Diese Akte erhält die frühere Akte als historische Quelle und dokumentiert aktuelle Entscheidungen getrennt vom nachgewiesenen technischen Stand.
+
+## 7. Nachtrag – Installationsfunktion (04.11.2026)
+
+**Bestätigter Auftrag:** Ein Installieren-Button wie bei „Lesedetektive“ soll auf der Start-/Auswahlseite verfügbar sein.
+
+**Umgesetzt auf GitHub main:**
+- index.html: Installieren-Button und Hinweisdialog auf der Spiele-Auswahlseite, Meta-Tags für Web-App-Installation.
+- pwa.js: native Installationsaufforderung, sofern der Browser sie anbietet; gerätespezifische Hinweise für iPhone/iPad, Android, Firefox unter Windows, Safari auf Mac und Chrome/Edge.
+- manifest.webmanifest: Name, Startpfad, Standalone-Darstellung und Farbgebung.
+- icons/icon-192.png und icons/icon-512.png: neue PWA-Icons.
+- sw.js: Service Worker für App-Grunddateien und nach Bedarf geladene Ressourcen (sämtliche großen Bildfolgen nicht automatisch offline verfügbar).
+- style.css: Installationsfeld und Hilfedialog.
+
+**GitHub-Commit der Installationsfunktion:** 46aa7b5741398740eff6706d4b58c1da55f0384f.
+
+**Nachweis:** Alle sieben Pfade sind im Repository vorhanden; Manifest wird korrekt geparst, pwa.js und sw.js sind syntaktisch gültig, der Button ist in index.html eingebaut.
+**Noch offen:** praktische Installation in Chrome/Edge unter Windows sowie Android/iPad; Firefox unter Windows muss eine Anleitung zeigen, da keine native PWA-Installation bereitsteht. Vollständige visuelle Abnahme aller elf Fortschrittsanimationen bleibt ebenfalls offen.
