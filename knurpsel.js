@@ -16,16 +16,14 @@ class View extends TreeReward.View {
   const title=document.getElementById('treeTitle'),button=document.getElementById('treeContinue');
   title.textContent='';title.hidden=true;this.dialog.setAttribute('aria-labelledby','treeCounter');button.hidden=true;
   document.getElementById('treeLarge').append(this.picture);document.body.classList.add('treeOpen');this.dialog.showModal();
-  await new Promise(resolve=>setTimeout(resolve,2000));
+  if(this.current.tagName==='IMG')await RewardMotion.pause(2000);
   if(run!==this.run)return false;
   const incoming=this.preloaded[info.stage];
   if(typeof incoming.decode==='function'){try{await incoming.decode();}catch(error){/* The browser can retry the normal image load. */}}
   if(run!==this.run)return false;
-  const outgoing=this.current,reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  this.picture.append(incoming);outgoing.classList.add('knurpsel-leave');incoming.classList.add('knurpsel-enter');
-  await new Promise(resolve=>setTimeout(resolve,reduced?20:this.art.duration+50));
-  if(run!==this.run)return false;
-  outgoing.remove();incoming.classList.remove('knurpsel-enter');this.current=incoming;
+  const outgoing=this.current;
+  if(!await RewardMotion.imageFade(this.picture,outgoing,incoming,()=>run===this.run))return false;
+  this.current=incoming;this.earnedFrames??=[];this.earnedFrames.push(this.picture.outerHTML);
   this.update();this.busy=false;this.finished=this.state.complete;this.waiting=true;
   this.picture.setAttribute('role','button');this.picture.setAttribute('tabindex','0');this.picture.setAttribute('aria-label',this.art.name+(this.finished?' anschauen und Runde beenden':' anschauen und weiterspielen'));
   title.hidden=!this.finished;
@@ -38,3 +36,4 @@ class View extends TreeReward.View {
 }
 root.KnurpselReward={stages,View};
 })(globalThis);
+
