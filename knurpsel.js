@@ -19,13 +19,29 @@ class View extends TreeReward.View {
   await new Promise(resolve=>setTimeout(resolve,2000));
   if(run!==this.run)return false;
   const incoming=this.preloaded[info.stage];
-  if(typeof incoming.decode==='function'){try{await incoming.decode();}catch(error){/* The browser can retry the normal image load. */}}
+  // Beim Bildladen niemals unbegrenzt hängenbleiben; ruhige alte Überblendung erhalten.
+  let loaded=false;
+  try{
+    loaded=await Promise.race([
+      (async()=>{if(incoming.decode)await incoming.decode();else if(!incoming.complete)await new Promise((resolve,reject)=>{incoming.addEventListener('load',resolve,{once:true});incoming.addEventListener('error',reject,{once:true});});return incoming.naturalWidth>0;})(),
+      new Promise(resolve=>setTimeout(()=>resolve(false),5000))
+    ]);
+  }catch{loaded=false;}
   if(run!==this.run)return false;
-  const outgoing=this.current,reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  this.picture.append(incoming);outgoing.classList.add('knurpsel-leave');incoming.classList.add('knurpsel-enter');
-  await new Promise(resolve=>setTimeout(resolve,reduced?20:this.art.duration+50));
-  if(run!==this.run)return false;
-  outgoing.remove();incoming.classList.remove('knurpsel-enter');this.current=incoming;
+  if(loaded){
+    const outgoing=this.current,reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    incoming.style.opacity='0';incoming.style.animation='none';
+    this.picture.append(incoming);
+    const duration=reduced?20:this.art.duration;
+    const t0=performance.now();
+    await new Promise(resolve=>{const step=t=>{if(run!==this.run){resolve();return;}const p=Math.min(1,(t-t0)/duration);incoming.style.opacity=String(p);outgoing.style.opacity=String(1-p);if(p<1)requestAnimationFrame(step);else resolve();};requestAnimationFrame(step);});
+    if(run!==this.run)return false;
+    outgoing.remove();incoming.style.opacity='1';incoming.classList.remove('knurpsel-enter');this.current=incoming;
+  }else{
+    const error=document.createElement('div');error.className='reward-image-error';
+    error.textContent='Dieses Bild konnte nicht geladen werden. Mit Weiter geht es trotzdem weiter.';
+    this.picture.replaceChildren(error);this.current=error;
+  }
   this.update();this.busy=false;this.finished=this.state.complete;this.waiting=true;
   this.picture.setAttribute('role','button');this.picture.setAttribute('tabindex','0');this.picture.setAttribute('aria-label',this.art.name+(this.finished?' anschauen und Runde beenden':' anschauen und weiterspielen'));
   title.hidden=!this.finished;
