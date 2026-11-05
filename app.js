@@ -70,7 +70,7 @@ let textScale=1;
 try{const saved=Number(localStorage.getItem(fontZoomKey));if(Number.isFinite(saved)&&saved>=0.85&&saved<=1.6)textScale=saved;}catch{}
 function setTextScale(next){
  textScale=Math.round(Math.max(0.85,Math.min(1.6,next))*100)/100;
- document.documentElement.style.setProperty('--question-scale',String(textScale));
+ document.documentElement.style.setProperty('--question-zoom-extra',Math.round((textScale-1)*34)+'px');
  $('textReset').textContent=Math.round(textScale*100)+' %';
  $('textSmaller').disabled=textScale<=0.85;
  $('textLarger').disabled=textScale>=1.6;
