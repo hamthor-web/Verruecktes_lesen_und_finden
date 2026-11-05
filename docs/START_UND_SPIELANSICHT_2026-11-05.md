@@ -17,3 +17,10 @@ In `main` umgesetzt:
 
 ## Kontrolle und offen
 Quellcode, Dateiverweise und JavaScript-Syntax im Repository geprüft. Darstellungsprüfung auf realem Handy/Tablet (Hoch-/Querformat, 6/9/12 Karten, verschiedene Schriftgrößen) steht noch aus. Die zentrale Projektverwaltung/Masterübersicht wurde nicht automatisch überschrieben; dieser Nachtrag ist für die Ablage bestimmt.
+
+## Nachprüfung und Korrektur, 05.11.2026
+Ein aktueller Handy-Screenshot zeigte trotz des vorherigen CSS-Updates weiterhin zwei Spalten. Deshalb wurde die Hochformat-Regel verstärkt und zusätzlich direkt in `index.html` aufgenommen (bis 1200 CSS-Pixel sowie dynamische Handy-Erkennung in `app.js`). Die Startseite soll jetzt Einführung und Beispielbilder oberhalb der Spielauswahl anzeigen.
+
+Für die Navigation wurde der Browser-/PWA-Verlauf in `app.js` um interne Ansichten ergänzt. Browser- oder Android-Zurück führt aus Spielansichten zur vorherigen App-Ansicht; zusätzlich ist ein deutliches Wischen nach rechts im Inhalt als Zurückgeste vorgesehen. Einschränkung: Vom Android-Betriebssystem reservierte Randgesten lassen sich in einer PWA nicht zuverlässig übersteuern. Auf der Startseite gibt es keinen vorherigen internen Bildschirm.
+
+`sw.js` erhielt eine neue Version und lädt App-JavaScript sowie CSS bei bestehender Netzverbindung bevorzugt frisch, mit Offline-Rückfall auf den Cache. Die Spielaufgaben, Bilder, Belohnungen und Speicherstände sind unverändert. Ein neuer Gerätetest der Hochformatumstellung und Gestennavigation ist noch erforderlich.
