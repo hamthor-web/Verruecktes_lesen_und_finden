@@ -102,7 +102,22 @@ function nextRound(){number++;locked=false;missed=false;$('next').hidden=true;$(
 async function choose(c,box){if(locked)return;if(c.id===round.answer){locked=true;box.classList.add('correct');if(!missed)firstTry++;$('feedback').textContent='Richtig! Du hast genau hingesehen.';$('next').textContent=number===10?'Runde beenden →':'Nächste Aufgabe →';document.querySelectorAll('.answer').forEach(b=>b.setAttribute('aria-disabled','true'));const completed=await reward.award(round.question.id);if(completed&&number<10){rewardFrames.push(reward.picture.outerHTML);nextRound();window.scrollTo({top:0,behavior:'instant'});}$('progressBar').style.width=`${reward.state.progress*10}%`;}else{missed=true;errors++;box.classList.remove('wrong');void box.offsetWidth;box.classList.add('wrong');$('feedback').textContent=level===3?'Schau noch einmal: Was wird ausgeschlossen?':'Schau noch einmal auf die Merkmale in der Frage.';setTimeout(()=>box.classList.remove('wrong'),450);}}
 function openZoom(c){$('zoomImage').src=c.image;$('zoomImage').alt=c.motif;$('zoomLabel').textContent=c.motif;$('zoom').showModal();document.body.classList.add('zoomOpen');}
 $('zoom').addEventListener('close',()=>document.body.classList.remove('zoomOpen'));$('closeZoom').onclick=()=>$('zoom').close();$('zoom').onclick=e=>{if(e.target===$('zoom'))$('zoom').close();};
-$('start').onclick=start;$('again').onclick=start;$('choose').onclick=()=>show('setup');$('settingsButton').onclick=()=>show('setup');$('home').onclick=e=>{e.preventDefault();show('setup');};$('next').onclick=()=>{if(number===10){finish();}else{nextRound();window.scrollTo({top:0,behavior:'instant'});}};
+function launchGame(){
+ const btn=$('start'),notice=$('startError');
+ notice.hidden=true;
+ btn.disabled=true;
+ try{
+  start();
+  if($('play').hidden||!round||!$('board').children.length)throw Error('Die erste Spielrunde konnte nicht aufgebaut werden.');
+ }catch(error){
+  console.error('Verrückt gesucht! Startfehler:',error);
+  // Falls nur die Navigationsansicht gewechselt hat, zurück zur Auswahl.
+  show('setup',true);
+  notice.textContent='Das Spiel konnte nicht gestartet werden: '+(error?.message||'Unbekannter Fehler')+'. Bitte aktualisiere die App und versuche es erneut.';
+  notice.hidden=false;
+ }finally{btn.disabled=false;}
+}
+$('start').onclick=launchGame;$('again').onclick=launchGame;$('choose').onclick=()=>show('setup');$('settingsButton').onclick=()=>show('setup');$('home').onclick=e=>{e.preventDefault();show('setup');};$('next').onclick=()=>{if(number===10){finish();}else{nextRound();window.scrollTo({top:0,behavior:'instant'});}};
 $('downloadMatrix').onclick=()=>{const blob=new Blob([JSON.stringify({project:'Verrückt gesucht!',cardCount:120,questionCount:matrix.length,questions:matrix},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Verrueckt_gesucht_Fragenmatrix.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
 
 function fitBoard(){
@@ -131,6 +146,24 @@ $('textSmaller').onclick=()=>setTextScale(textScale-0.15);
 $('textLarger').onclick=()=>setTextScale(textScale+0.15);
 $('textReset').onclick=()=>setTextScale(1);
 setTextScale(textScale);
+// Eigene Schriftgröße auf der Startseite, unabhängig vom Lesetext im Spiel.
+const setupZoomKey='verrueckt-gesucht-startschrift-v1';
+let setupScale=1;
+try{const saved=Number(localStorage.getItem(setupZoomKey));if(Number.isFinite(saved)&&saved>=0.85&&saved<=1.6)setupScale=saved;}catch{}
+function setSetupScale(next){
+ setupScale=Math.round(Math.max(.85,Math.min(1.6,next))*100)/100;
+ const offset=Math.round((setupScale-1)*22);
+ document.documentElement.style.setProperty('--setup-extra',offset+'px');
+ $('setupTextReset').textContent=Math.round(setupScale*100)+' %';
+ $('setupTextSmaller').disabled=setupScale<=.85;
+ $('setupTextLarger').disabled=setupScale>=1.6;
+ try{localStorage.setItem(setupZoomKey,String(setupScale));}catch{}
+}
+$('setupTextSmaller').onclick=()=>setSetupScale(setupScale-.15);
+$('setupTextLarger').onclick=()=>setSetupScale(setupScale+.15);
+$('setupTextReset').onclick=()=>setSetupScale(1);
+setSetupScale(setupScale);
+
 
 window.addEventListener?.('resize',fitBoard);
 window.visualViewport?.addEventListener('resize',fitBoard);
