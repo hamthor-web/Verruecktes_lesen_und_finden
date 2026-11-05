@@ -1,5 +1,16 @@
 'use strict';
 const data=GAME_DATA,E=QuestionEngine,matrix=E.buildMatrix(data),$=id=>document.getElementById(id);
+// Mobile Hochformat-Erkennung auch für ungewöhnliche PWA-Viewport-Größen.
+function adjustPortraitSetup(){
+ const portrait=window.innerHeight>window.innerWidth*1.12;
+ const touch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+ const deviceShortSide=Math.min(window.screen?.width||window.innerWidth,window.screen?.height||window.innerHeight);
+ document.documentElement.classList.toggle('vg-portrait-compact',portrait&&touch&&deviceShortSide<=1200);
+}
+adjustPortraitSetup();
+window.addEventListener('resize',adjustPortraitSetup);
+window.addEventListener('orientationchange',adjustPortraitSetup);
+
 let level=1,number=0,round=null,locked=false,used=[],lastStyle=-1,errors=0,firstTry=0,missed=false,activeRewardId='pfau',rewardMode='random',rewardFrames=[];
 const rewardIds=['pfau','baum','knurpsel','rakete','blumenwiese','wundereiche','kinderzimmer','marsmission','baumhaus','unterwasserwelt','matschwiese'];
 const rewardKey='verrueckt-gesucht-rewards-v1';
@@ -38,7 +49,46 @@ document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{level=Number
 let reward=new PeacockReward.View(PFAU_ART,$('treeMount'),$('treeCounter'),$('treeDialog'),finish);
 function finish(){rememberReward();$('result').textContent=`${firstTry} Aufgaben hast du beim ersten Versuch gefunden.`;show('finish');}
 const names=['','Einfach','Etwas schwieriger','Ganz schwierig'];
-function show(name){document.body.classList.toggle('playing',name==='play');if(name!=='play')reward.cancel();for(const id of ['setup','play','finish','gallery'])$(id).hidden=id!==name;$('settingsButton').hidden=name==='setup';window.scrollTo({top:0,behavior:'instant'});}
+// Jede Spielansicht erhält einen eigenen Verlaufseintrag: Android-Zurück und
+// Browser-Wischgeste kehren zur vorherigen Ansicht zurück statt die PWA zu beenden.
+let currentScreen='setup',restoringHistory=false;
+try{history.replaceState({...history.state,vgScreen:'setup'},'');}catch{}
+function show(name,fromHistory=false){
+ if(!fromHistory&&name!==currentScreen){
+  try{history.pushState({vgScreen:name},'');}catch{}
+ }
+ currentScreen=name;
+ document.body.classList.toggle('playing',name==='play');
+ if(name!=='play')reward.cancel();
+ for(const id of ['setup','play','finish','gallery'])$(id).hidden=id!==name;
+ $('settingsButton').hidden=name==='setup';
+ window.scrollTo({top:0,behavior:'instant'});
+ if(name==='play')requestAnimationFrame(fitBoard);
+}
+window.addEventListener('popstate',e=>{
+ const name=e.state?.vgScreen;
+ if(['setup','play','finish','gallery'].includes(name))show(name,true);
+ else if(currentScreen!=='setup')show('setup',true);
+});
+// Ergänzende Wischgeste innerhalb des Inhalts, auch wenn der Browser
+// keine Zurückgeste bereitstellt. Vertikales Scrollen bleibt ungestört.
+let startSwipe=null;
+document.addEventListener('touchstart',e=>{
+ if(e.touches.length!==1)return;
+ const t=e.touches[0];
+ startSwipe={x:t.clientX,y:t.clientY,time:Date.now()};
+},{passive:true});
+document.addEventListener('touchend',e=>{
+ if(!startSwipe||e.changedTouches.length!==1)return;
+ const t=e.changedTouches[0],dx=t.clientX-startSwipe.x,dy=t.clientY-startSwipe.y;
+ const intent=dx>100&&Math.abs(dy)<Math.min(65,dx*.55)&&Date.now()-startSwipe.time<850;
+ startSwipe=null;
+ if(!intent)return;
+ const dialog=Array.from(document.querySelectorAll('dialog[open]')).at(-1);
+ if(dialog){if(dialog.id!=='treeDialog')dialog.close();return;}
+ if(currentScreen!=='setup')history.back();
+},{passive:true});
+document.addEventListener('touchcancel',()=>{startSwipe=null;},{passive:true});
 function start(){reward.cancel();activeRewardId=chooseRewardId();$('treeContinue').textContent='Weiter →';reward=activeRewardId==='blumenwiese'?new FlowerReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='wundereiche'?new WonderOakReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='kinderzimmer'?new BedroomReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='marsmission'?new MarsMissionReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='baumhaus'?new TreehouseReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='unterwasserwelt'?new UnderwaterReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='matschwiese'?new MeadowReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='rakete'?new RocketReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='knurpsel'?new KnurpselReward.View($('treeMount'),$('treeCounter'),$('treeDialog'),finish):activeRewardId==='baum'?new TreeReward.View(TREE_ART,$('treeMount'),$('treeCounter'),$('treeDialog'),finish):new PeacockReward.View(PFAU_ART,$('treeMount'),$('treeCounter'),$('treeDialog'),finish);$('treeMount').replaceChildren();number=0;used=[];errors=0;firstTry=0;reward.reset();rewardFrames=[reward.picture.outerHTML];show('play');nextRound();}
 function nextRound(){number++;locked=false;missed=false;$('next').hidden=true;$('feedback').textContent='Tippe auf das passende Bild.';
  try{round=E.makeRound(data,matrix,{level,group:0,size:$('size').value,used});}catch(err){$('feedback').textContent=err.message;return;}
