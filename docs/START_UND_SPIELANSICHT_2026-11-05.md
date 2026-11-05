@@ -51,3 +51,20 @@ Technische Korrektur:
 - Neue veröffentlichte Assets `app-release-20261105-c.js`, `style-release-20261105-c.css` und neue SW-Version `2026-11-05-screens-exclusive-c-1`.
 
 Die Bilder und Spielmechanik bleiben unverändert, Spielstände bleiben erhalten. Quellverweise und JavaScript-Syntax im Repo geprüft; reale Geräteabnahme noch offen.
+
+## 05.11.2026 – Bildschirmwechsel robust gemacht, ausführlicher Test
+
+Die Nutzerin meldete erneut, dass Start- und Galerieansicht unterhalb der Startseite erscheinen und Scrollen nach unten erfordern. Die vorige Korrektur mittels `hidden` und hochspezifischem CSS genügte auf dem tatsächlichen Gerät nicht.
+
+**Umgesetzte Reparatur (Release E):**
+- Die zentrale Funktion `show()` setzt für jede inaktive Seite **sowohl `hidden` als auch ein Inline-`display:none!important`**. Für die aktive Seite wird dieses Inline-Display entfernt. Damit kann auch eine ältere Hochformat-CSS-Regel das Verbergen nicht unterlaufen.
+- `body.dataset.screen` führt die Bildschirmzustände `setup`, `play`, `gallery`, `finish`.
+- Beim Öffnen und nach dem nächsten Animationsframe wird die Scrollposition auf 0 zurückgestellt.
+- Spiel und Galerie öffnen jeweils den eigenen Vollbildbereich ohne oberen Startkopf und Fußzeile; das Spiel nutzt die Höhe vertikal mittig.
+- Die Galerie zeigt nur **tatsächlich fertig erspielte** Bilder, statt 11 leere Platzhalter anzuzeigen. Sind noch keine vorhanden, erscheint ein verständlicher Hinweis. Mit wenigen Bildern wird die Auswahl in der Bildschirmmitte angezeigt; bei vielen ist normales Scrollen möglich.
+- Neue eindeutig benannte Ressourcen `app-release-20261105-e.js` und `style-release-20261105-e.css`, eingebunden in `index.html`. Der Offline-Service-Worker trägt `2026-11-05-exclusive-screens-tested-e-1`.
+- Verbindlich: Keine Spiele, Bilddaten, Fortschrittsbilder oder Spielstände gelöscht.
+
+**Testumfang:** Die echten JavaScript-Module einschließlich `app-release-20261105-e.js` wurden in einem isolierten DOM-Funktionstest ausgeführt. Durchlaufen: Startbildschirm, Spielstart mit 6/9/12 Karten, zurück zur Auswahl nach jeder Runde, Galerie aufrufen und zurück. In allen neun Zuständen wurde genau eine aktive Ansicht geprüft, alle inaktiven hatten `hidden` und Inline-`display:none!important`. Die drei Rundengrößen erzeugten 6, 9 und 12 Karten. Ein separater Chromium-Browsertest mit repräsentativen HTML-/CSS-Layouts wurde bei 360×780, 390×844, 430×932, 768×1024, 1024×768 und 1280×800 durchgeführt: Sichtbarkeit, obere Scrollposition, Ansichtwechsel und Galerie-Einstieg bestanden.
+
+**Grenze:** Mangels direktem Browserzugriff auf GitHub Pages konnte der komplette veröffentlichte Stand einschließlich Originalbilddateien und Service-Worker-Verhalten auf dem konkreten Android-Gerät nicht getestet werden. Der Chromium-Test verwendete ein reduziertes Layoutmodell; er ersetzt keine Geräteabnahme. Deshalb keine Behauptung einer vollständig bestandenen Live-Geräteprüfung.
