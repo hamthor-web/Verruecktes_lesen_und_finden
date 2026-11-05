@@ -24,3 +24,10 @@ Ein aktueller Handy-Screenshot zeigte trotz des vorherigen CSS-Updates weiterhin
 Für die Navigation wurde der Browser-/PWA-Verlauf in `app.js` um interne Ansichten ergänzt. Browser- oder Android-Zurück führt aus Spielansichten zur vorherigen App-Ansicht; zusätzlich ist ein deutliches Wischen nach rechts im Inhalt als Zurückgeste vorgesehen. Einschränkung: Vom Android-Betriebssystem reservierte Randgesten lassen sich in einer PWA nicht zuverlässig übersteuern. Auf der Startseite gibt es keinen vorherigen internen Bildschirm.
 
 `sw.js` erhielt eine neue Version und lädt App-JavaScript sowie CSS bei bestehender Netzverbindung bevorzugt frisch, mit Offline-Rückfall auf den Cache. Die Spielaufgaben, Bilder, Belohnungen und Speicherstände sind unverändert. Ein neuer Gerätetest der Hochformatumstellung und Gestennavigation ist noch erforderlich.
+
+## Ergänzung: Startschrift und wieder funktionsfähiger Spielstart – 05.11.2026
+Auf Nutzerwunsch steht nun auch auf der Startseite neben „So möchtest du spielen“ eine eigene Schriftgrößensteuerung mit A−, Prozentanzeige und A+. Die Einstellung wird unabhängig von der Aufgabenschrift im Gerät gespeichert. Betroffen sind `index.html`, `style.css` und `app.js`.
+
+Der zuvor als wirkungslos gemeldete „Los geht's“-Button wurde mit einer gesicherten Startfunktion und sichtbarer Fehlermeldung versehen. Im isolierten JavaScript-Funktionstest wurden Originalmodule geladen und ein Klick simuliert; die erste Runde mit sechs Bildkarten wurde erfolgreich erstellt. Ein realer Browser-/Gerätetest ist weiterhin erforderlich, insbesondere für zuvor zwischengespeicherte Versionen.
+
+`sw.js`: Offline-Version auf `2026-11-05-setup-font-start-repair-1` erhöht. Die ursprünglichen Spielinhalte und gespeicherten Fortschritte bleiben unangetastet.
