@@ -38,3 +38,16 @@ Nach Rückmeldung, dass der Startknopf weiterhin nicht reagiert, wurde die bishe
 Frühe JavaScript- und Ladefehler sowie Fälle, in denen kein Start-Handler registriert wurde oder der Klick nicht zur Spielansicht führt, werden jetzt sichtbar auf der Startseite angezeigt. Alle vorhandenen Bilder, Inhalte und gespeicherten Spielstände bleiben erhalten.
 
 **Status: Quellen aktualisiert, praktische Prüfung auf dem betroffenen Gerät weiterhin offen.** Ursache kann ohne Fehleranzeige aus der echten Laufzeitumgebung nicht als endgültig geklärt gelten.
+
+## 05.11.2026 – Ursache des scheinbar nicht funktionierenden Spielstarts gefunden
+
+Die Nutzerin stellte fest, dass die Spielansicht tatsächlich geöffnet wurde, während die Einführung darüber weiter sichtbar blieb. Ursache war die nachträglich eingefügte Porträt-Regel `.setup{display:grid!important}`, die das standardmäßige `[hidden]{display:none!important}` wegen Kaskaden-/Spezifitätskonflikten überstimmte. Damit blieb der Startbereich trotz `hidden` sichtbar.
+
+Technische Korrektur:
+- `#setup[hidden], #play[hidden], #gallery[hidden], #finish[hidden]` mit explizitem `display:none!important` in Start-HTML und neuer CSS-Datei.
+- Start, Spiel, Galerie und Ergebnis werden als getrennte Ansichten behandelt. Während Spiel und Galerie werden Kopfbereich und Fußzeile ausgeblendet.
+- `← Zur Auswahl` ist als eigener, erreichbarer Button in der Spielfläche eingebaut.
+- Galerie erhält bildschirmfüllendes Layout mit vertikal mittiger Bildauswahl; die bereits vorhandene Vollbild-Bildbetrachtung bleibt erhalten.
+- Neue veröffentlichte Assets `app-release-20261105-c.js`, `style-release-20261105-c.css` und neue SW-Version `2026-11-05-screens-exclusive-c-1`.
+
+Die Bilder und Spielmechanik bleiben unverändert, Spielstände bleiben erhalten. Quellverweise und JavaScript-Syntax im Repo geprüft; reale Geräteabnahme noch offen.
