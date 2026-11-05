@@ -182,3 +182,31 @@ body.playing .feedbackRow p{font-size:clamp(15px,1.8vw,19px)}
  body.playing .questionBox h1{font-size:calc(25px + var(--question-zoom-extra,0px))}
  .textZoom button{min-height:36px}
 }
+
+
+/* Schriftgrößenbedienung auf dem Startbildschirm (05.11.2026) */
+.setup-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:15px}
+.setup-heading h2{margin:0;font-size:calc(24px + var(--setup-extra,0px))}
+.setupTextZoom{flex-shrink:0}
+.setupTextZoom button{min-height:42px;min-width:43px;padding:7px 9px}
+.setupTextZoom #setupTextReset{min-width:62px}
+.setup .intro h1{font-size:calc(clamp(34px,4vw,56px) + var(--setup-extra,0px))}
+.setup .intro p{font-size:calc(18px + var(--setup-extra,0px))}
+.setup .setupPanel legend,
+.setup .setupPanel .field,
+.setup .setupPanel .reward-picker label{font-size:calc(15px + var(--setup-extra,0px))}
+.setup .setupPanel .level b,
+.setup .setupPanel .field select{font-size:calc(17px + var(--setup-extra,0px))}
+.setup .setupPanel .level small,
+.setup .setupPanel .reward-modes .level small{font-size:calc(13px + var(--setup-extra,0px) * .75)}
+.setup .setupPanel .fine,
+.setup .setupPanel details,
+.setup .setupPanel .install-panel p{font-size:calc(13px + var(--setup-extra,0px) * .65)}
+.setup .setupPanel .primary{font-size:calc(18px + var(--setup-extra,0px))}
+#startError{background:#fff0e8;border:1px solid #c97557;border-radius:10px;padding:11px;color:#8b3021;margin:4px 0 12px}
+@media(max-width:650px){
+ .setup-heading{align-items:flex-start}
+ .setup-heading h2{font-size:calc(23px + var(--setup-extra,0px))}
+ .setup .intro h1{font-size:calc(clamp(30px,7.5vw,38px) + var(--setup-extra,0px))}
+ .setup .intro p{font-size:calc(17px + var(--setup-extra,0px))}
+}
