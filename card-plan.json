@@ -8,7 +8,7 @@
           "Nasen",
           [
             "2 schwarze",
-            "1 schwarze und 1 braune"
+            "1 schwarze und 1 gelbe"
           ]
         ],
         [
@@ -30,7 +30,7 @@
       "clauses": [
         [
           "hat zwei schwarze Nasen",
-          "hat eine schwarze und eine braune Nase"
+          "hat eine schwarze und eine gelbe Nase"
         ],
         [
           "hat einen braunen Schwanz",
@@ -44,7 +44,7 @@
       "negatives": [
         [
           "hat nicht zwei schwarze Nasen",
-          "hat keine braune Nase"
+          "hat keine gelbe Nase"
         ],
         [
           "hat keinen braunen Schwanz",
@@ -1202,7 +1202,7 @@
       "group": 1,
       "motif": "Hund",
       "attributes": {
-        "Nasen": "1 schwarze und 1 braune",
+        "Nasen": "1 schwarze und 1 gelbe",
         "Schwanz": "braun",
         "Halsschleife": "rot"
       },
@@ -1220,7 +1220,7 @@
       "group": 1,
       "motif": "Hund",
       "attributes": {
-        "Nasen": "1 schwarze und 1 braune",
+        "Nasen": "1 schwarze und 1 gelbe",
         "Schwanz": "blau",
         "Halsschleife": "grün"
       },
