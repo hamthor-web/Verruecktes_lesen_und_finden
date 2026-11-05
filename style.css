@@ -151,7 +151,7 @@ body.playing #board{flex-shrink:0}
 body.playing .taskLayout{grid-template-columns:minmax(0,1fr) clamp(100px,15vw,160px);gap:14px}
 body.playing .questionBox{padding:clamp(13px,2vw,22px)}
 body.playing .questionBox h1{
-  font-size:calc(clamp(28px,3.3vw,38px) * var(--question-scale,1));
+  font-size:calc(clamp(28px,3.3vw,38px) + var(--question-zoom-extra,0px));
   line-height:1.32;
   margin:9px 0 0;
   overflow-wrap:anywhere
@@ -165,7 +165,7 @@ body.playing .feedbackRow p{font-size:clamp(15px,1.8vw,19px)}
  body.playing #play{min-height:calc(100dvh - 78px);padding-block:12px}
  body.playing .taskLayout{grid-template-columns:minmax(0,1fr) 92px;gap:9px}
  body.playing .questionBox{padding:12px 12px 14px}
- body.playing .questionBox h1{font-size:calc(clamp(28px,6.5vw,34px) * var(--question-scale,1));line-height:1.28}
+ body.playing .questionBox h1{font-size:calc(clamp(28px,6.5vw,34px) + var(--question-zoom-extra,0px));line-height:1.28}
  body.playing .questionTools .eyebrow{font-size:11px;letter-spacing:.05em}
  .textZoom button{min-height:40px;min-width:40px;padding:6px 8px}
  .textZoom #textReset{min-width:54px}
@@ -179,6 +179,6 @@ body.playing .feedbackRow p{font-size:clamp(15px,1.8vw,19px)}
 }
 @media(max-height:520px) and (orientation:landscape){
  body.playing #play{min-height:auto;justify-content:flex-start;padding-block:5px}
- body.playing .questionBox h1{font-size:calc(25px * var(--question-scale,1))}
+ body.playing .questionBox h1{font-size:calc(25px + var(--question-zoom-extra,0px))}
  .textZoom button{min-height:36px}
 }
