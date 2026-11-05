@@ -31,3 +31,10 @@ Auf Nutzerwunsch steht nun auch auf der Startseite neben „So möchtest du spie
 Der zuvor als wirkungslos gemeldete „Los geht's“-Button wurde mit einer gesicherten Startfunktion und sichtbarer Fehlermeldung versehen. Im isolierten JavaScript-Funktionstest wurden Originalmodule geladen und ein Klick simuliert; die erste Runde mit sechs Bildkarten wurde erfolgreich erstellt. Ein realer Browser-/Gerätetest ist weiterhin erforderlich, insbesondere für zuvor zwischengespeicherte Versionen.
 
 `sw.js`: Offline-Version auf `2026-11-05-setup-font-start-repair-1` erhöht. Die ursprünglichen Spielinhalte und gespeicherten Fortschritte bleiben unangetastet.
+
+## 05.11.2026 – Spielstart auf dem Gerät weiterhin nicht ausführbar (noch nicht abschließend bestätigt)
+Nach Rückmeldung, dass der Startknopf weiterhin nicht reagiert, wurde die bisherige syntaktische bzw. simulierte Prüfung ausdrücklich als unzureichend eingeordnet. Zur Ausschaltung alter zwischengespeicherter App-Dateien werden die JS/CSS-Dateien zusätzlich mit eindeutigen neuen Dateinamen ausgeliefert: `app-release-20261105-b.js` und `style-release-20261105-b.css`. Die Startseite bindet diese Dateien direkt ein. Die neue Service-Worker-Version `2026-11-05-start-release-b-2` nimmt sie in den Offline-Cache auf.
+
+Frühe JavaScript- und Ladefehler sowie Fälle, in denen kein Start-Handler registriert wurde oder der Klick nicht zur Spielansicht führt, werden jetzt sichtbar auf der Startseite angezeigt. Alle vorhandenen Bilder, Inhalte und gespeicherten Spielstände bleiben erhalten.
+
+**Status: Quellen aktualisiert, praktische Prüfung auf dem betroffenen Gerät weiterhin offen.** Ursache kann ohne Fehleranzeige aus der echten Laufzeitumgebung nicht als endgültig geklärt gelten.
