@@ -64,6 +64,24 @@ function fitBoard(){
  const columnWidth=Math.floor((rect.width-gap*(columns-1))/columns);
  board.style.setProperty('--card-image-height',Math.max(72,Math.min(320,columnWidth-16,rowHeight-16))+'px');
 }
+// Leseschriftgröße: dauerhaft je Gerät, unabhängig von Bild-Zoom und Spielstand.
+const fontZoomKey='verrueckt-gesucht-aufgabenschrift-v1';
+let textScale=1;
+try{const saved=Number(localStorage.getItem(fontZoomKey));if(Number.isFinite(saved)&&saved>=0.85&&saved<=1.6)textScale=saved;}catch{}
+function setTextScale(next){
+ textScale=Math.round(Math.max(0.85,Math.min(1.6,next))*100)/100;
+ document.documentElement.style.setProperty('--question-scale',String(textScale));
+ $('textReset').textContent=Math.round(textScale*100)+' %';
+ $('textSmaller').disabled=textScale<=0.85;
+ $('textLarger').disabled=textScale>=1.6;
+ try{localStorage.setItem(fontZoomKey,String(textScale));}catch{}
+ fitBoard();
+}
+$('textSmaller').onclick=()=>setTextScale(textScale-0.15);
+$('textLarger').onclick=()=>setTextScale(textScale+0.15);
+$('textReset').onclick=()=>setTextScale(1);
+setTextScale(textScale);
+
 window.addEventListener?.('resize',fitBoard);
 window.visualViewport?.addEventListener('resize',fitBoard);
 
