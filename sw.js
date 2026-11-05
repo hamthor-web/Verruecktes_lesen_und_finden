@@ -1,7 +1,7 @@
 'use strict';
-const VERSION='2026-11-05-app-without-preview-2';
+const VERSION='2026-11-05-yellow-dog-noses-1';
 const CACHE='verrueckt-gesucht-shell-'+VERSION;
-const SHELL=['./','index.html','style.css','app.js','data.js','engine.js','tree.js','pfau.js','pfau-art.js','tree-art.js','knurpsel.js','rakete.js','matschwiese.js','unterwasserwelt.js','baumhaus.js','marsmission.js','kinderzimmer.js','blumenwiese.js','wundereiche.js','pwa.js','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png'];
+const SHELL=['./','index.html','style.css','app.js','data.js','assets/hund-gelbe-nase-05.svg','assets/hund-gelbe-nase-06.svg','engine.js','tree.js','pfau.js','pfau-art.js','tree-art.js','knurpsel.js','rakete.js','matschwiese.js','unterwasserwelt.js','baumhaus.js','marsmission.js','kinderzimmer.js','blumenwiese.js','wundereiche.js','pwa.js','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(async cache=>{for(const p of SHELL){const u=new URL(p,self.registration.scope);const res=await fetch(u,{cache:'reload'});if(!res.ok)throw Error('Missing: '+p);await cache.put(u,res);}}));self.skipWaiting();});
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('verrueckt-gesucht-shell-')&&k!==CACHE)await caches.delete(k);await self.clients.claim();})()));
 
