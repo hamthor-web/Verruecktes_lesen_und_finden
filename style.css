@@ -100,3 +100,85 @@ body.playing .reward-panel p{font-size:11px;margin:3px 0}
 
 /* Installationsbedienung, unabhängig vom Spielstart */
 .install-panel{display:flex;flex-direction:column;gap:6px;margin:-10px 0 18px}.install-app-button{align-self:flex-start;padding:10px 17px;min-height:44px;font-weight:750;background:#e8f1e3;border:1px solid #aec8aa;color:#244536}.install-app-button:disabled{opacity:.75;cursor:default}.install-panel p{margin:0;font-size:14px;color:#475b4a;line-height:1.45}#installHelp{width:min(92vw,520px);max-width:520px;padding:24px;border-radius:20px;border:1px solid #cfddc9;background:#faf8ef;color:#244536;box-shadow:0 12px 38px #152f2080}#installHelp::backdrop{background:#142a1e99}#installHelp h2{margin:0 0 14px}#installHelp p{line-height:1.55;white-space:pre-line;margin:0 0 18px}#installHelpClose{display:block;margin-left:auto}
+
+
+/* 05.11.2026: Bildschirmfläche auf Start- und Spielseite sinnvoll nutzen. */
+@media (max-width:950px) and (orientation:portrait){
+  .setup{grid-template-columns:minmax(0,1fr);gap:22px;max-width:760px;margin-inline:auto}
+  .intro{text-align:center}
+  .intro p{max-width:640px;margin:12px auto;color:#52695a}
+  .intro h1{font-size:clamp(31px,5.6vw,48px);margin:12px 0}
+  .sample{display:flex;justify-content:center;gap:clamp(9px,2vw,20px);margin:16px auto 0;max-width:530px}
+  .sample img{width:29%;max-width:150px;border-radius:16px}
+  .setupPanel{width:100%;max-width:100%;padding:clamp(17px,3vw,30px)}
+}
+@media (max-width:650px) and (orientation:portrait){
+  .setup{gap:18px}
+  .intro h1{font-size:clamp(29px,8vw,38px)}
+  .intro p{font-size:17px;line-height:1.45}
+  .intro .sample{display:flex;margin-top:15px}
+  .sample img{width:29%;border-radius:13px}
+  .setupPanel{padding:19px 16px;border-radius:20px}
+  .setupPanel h2{margin-bottom:18px}
+  .install-panel{margin-top:0}
+  .install-app-button{flex:1 1 130px}
+  .reward-modes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .reward-modes .level{padding:11px 9px;min-width:0}
+  .reward-modes .level b{font-size:15px}
+  .reward-modes .level small{font-size:12px}
+}
+@media (max-width:390px) and (orientation:portrait){
+  .reward-modes{grid-template-columns:1fr}
+  .sample img{width:30%}
+}
+
+/* Die Spielinhalte dürfen im Hochformat und auf großen Displays
+   vertikal mittig stehen. Bei wenig Platz wächst die Seite zum Scrollen. */
+body.playing main{width:100%;max-width:1280px}
+body.playing #play{
+  min-height:calc(100dvh - 105px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding-block:clamp(10px,2.5dvh,34px);
+}
+body.playing #play[hidden]{display:none}
+body.playing .roundhead,
+body.playing .progress,
+body.playing .taskLayout,
+body.playing .feedbackRow,
+body.playing #board{flex-shrink:0}
+body.playing .taskLayout{grid-template-columns:minmax(0,1fr) clamp(100px,15vw,160px);gap:14px}
+body.playing .questionBox{padding:clamp(13px,2vw,22px)}
+body.playing .questionBox h1{
+  font-size:calc(clamp(28px,3.3vw,38px) * var(--question-scale,1));
+  line-height:1.32;
+  margin:9px 0 0;
+  overflow-wrap:anywhere
+}
+.questionTools{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.textZoom{display:flex;align-items:center;gap:6px}
+.textZoom button{min-width:44px;min-height:44px;padding:7px 10px;font-size:16px;font-weight:800;background:#eff5e9;border-color:#b9ceb4}
+.textZoom #textReset{min-width:65px;font-size:13px;font-weight:650}
+body.playing .feedbackRow p{font-size:clamp(15px,1.8vw,19px)}
+@media(max-width:650px){
+ body.playing #play{min-height:calc(100dvh - 78px);padding-block:12px}
+ body.playing .taskLayout{grid-template-columns:minmax(0,1fr) 92px;gap:9px}
+ body.playing .questionBox{padding:12px 12px 14px}
+ body.playing .questionBox h1{font-size:calc(clamp(28px,6.5vw,34px) * var(--question-scale,1));line-height:1.28}
+ body.playing .questionTools .eyebrow{font-size:11px;letter-spacing:.05em}
+ .textZoom button{min-height:40px;min-width:40px;padding:6px 8px}
+ .textZoom #textReset{min-width:54px}
+ body.playing .taskLayout .reward-panel p{font-size:12px}
+}
+@media(max-width:400px){
+ .questionTools{align-items:flex-start;gap:7px}
+ .textZoom{gap:3px}
+ .textZoom button{min-width:36px;padding:6px}
+ .textZoom #textReset{min-width:50px;font-size:12px}
+}
+@media(max-height:520px) and (orientation:landscape){
+ body.playing #play{min-height:auto;justify-content:flex-start;padding-block:5px}
+ body.playing .questionBox h1{font-size:calc(25px * var(--question-scale,1))}
+ .textZoom button{min-height:36px}
+}
