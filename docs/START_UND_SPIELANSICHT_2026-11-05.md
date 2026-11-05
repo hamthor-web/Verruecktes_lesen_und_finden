@@ -68,3 +68,17 @@ Die Nutzerin meldete erneut, dass Start- und Galerieansicht unterhalb der Starts
 **Testumfang:** Die echten JavaScript-Module einschließlich `app-release-20261105-e.js` wurden in einem isolierten DOM-Funktionstest ausgeführt. Durchlaufen: Startbildschirm, Spielstart mit 6/9/12 Karten, zurück zur Auswahl nach jeder Runde, Galerie aufrufen und zurück. In allen neun Zuständen wurde genau eine aktive Ansicht geprüft, alle inaktiven hatten `hidden` und Inline-`display:none!important`. Die drei Rundengrößen erzeugten 6, 9 und 12 Karten. Ein separater Chromium-Browsertest mit repräsentativen HTML-/CSS-Layouts wurde bei 360×780, 390×844, 430×932, 768×1024, 1024×768 und 1280×800 durchgeführt: Sichtbarkeit, obere Scrollposition, Ansichtwechsel und Galerie-Einstieg bestanden.
 
 **Grenze:** Mangels direktem Browserzugriff auf GitHub Pages konnte der komplette veröffentlichte Stand einschließlich Originalbilddateien und Service-Worker-Verhalten auf dem konkreten Android-Gerät nicht getestet werden. Der Chromium-Test verwendete ein reduziertes Layoutmodell; er ersetzt keine Geräteabnahme. Deshalb keine Behauptung einer vollständig bestandenen Live-Geräteprüfung.
+
+## 05.11.2026 – Würstchen-Bildbuttons (bestätigte Vorlagen)
+
+Die Nutzerin hat zwei 1200×200-Pixel-Bildvorlagen geliefert und deren Einsatz ausdrücklich festgelegt:
+- Vorlage mit links stehendem Würstchen: `Los geht’s` auf der Startseite.
+- Vorlage mit rechts gehendem Würstchen: `Weiter` unter dem großen Fortschrittsanimationsbild.
+
+Umgesetzt in `main` ohne Änderung der Spielfunktionen:
+- Originalvorlagen als leicht komprimierte, eigenständige SVG-Dateien mit eingebettetem WebP im Repository: `assets/buttons/los-gehts-v1.svg`, `assets/buttons/weiter-v1.svg`. Die übrigen Bilder bleiben unangetastet.
+- Startknopf `#start` und Fortschrittsdialog-Knopf `#treeContinue` als reguläre interaktive Buttons mit jeweiliger Hintergrundgrafik und gut lesbarer textlicher Beschriftung.
+- Neue CSS-/JS-Release-Dateien: `style-release-20261105-f.css`, `app-release-20261105-f.js`; HTML und Service-Worker Version `2026-11-05-sausage-buttons-f-1` aktualisiert.
+- Beschriftung `Weiter` wird bei Spielstart nicht mehr durch `Weiter →` ersetzt.
+
+**Prüfung:** Beide eingebetteten Bilddateien mit gültigem Base64/RIFF-WebP-Header und Originalformatverhältnis 6:1 im Repository bestätigt. HTML-/CSS-Verweise und JS-Syntax kontrolliert. Die Button-Grafiken wurden in einem lokalen Chromium-Darstellungstest mit 390-Pixel-Handybreite und Beschriftung visualisiert. Kein Test des vollständigen Live-GitHub-Pages-Spiels auf dem Nutzergerät; diese Abnahme bleibt offen.
